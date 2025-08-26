@@ -19,7 +19,7 @@ fun CommentInputField(
     focusRequester: FocusRequester,
     onValueChange: (String) -> Unit,
     userName: String? = null,
-    userAvatarImageUrl: String,
+    userAvatarImageUrl: String? = null,
     onSendClick: () -> Unit,
     onCancel: () -> Unit,
 ) {

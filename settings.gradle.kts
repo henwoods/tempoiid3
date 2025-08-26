@@ -95,6 +95,7 @@ include(":core:model")
 
 include(":feature:feed")
 include(":feature:auth")
+include(":feature:events")
 include(":feature:onboarding")
 include(":feature:settings")
 include(":feature:imagepick")

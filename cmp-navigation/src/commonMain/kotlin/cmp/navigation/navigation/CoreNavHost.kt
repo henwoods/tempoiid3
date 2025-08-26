@@ -86,6 +86,8 @@ internal fun FeatureNavHost(
             },
         )
 
+        eventsScreen(modifier, appBar)
+
         comingSoonScreen()
     }
 }

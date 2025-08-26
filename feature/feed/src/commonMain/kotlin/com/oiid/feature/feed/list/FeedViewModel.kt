@@ -2,6 +2,7 @@ package com.oiid.feature.feed.list
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.oiid.core.config.artistId
 import com.oiid.core.datastore.UserPreferencesRepository
 import com.oiid.core.model.PostItem
 import com.oiid.core.model.api.Resource
@@ -57,6 +58,7 @@ class FeedViewModel(
 
     private val _uiEvent = MutableSharedFlow<UiEvent>()
     val uiEvent: SharedFlow<UiEvent> = _uiEvent
+
     init {
         Logger.d("FeedViewModel created: ${this.hashCode()}")
     }

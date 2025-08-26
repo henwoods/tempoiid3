@@ -17,6 +17,7 @@ kotlin {
             implementation(projects.core.model)
             implementation(projects.coreBase.platform)
             implementation(projects.core.common)
+            implementation(projects.coreBase.platform)
             implementation(libs.jb.composeViewmodel)
             implementation(libs.jb.lifecycleViewmodel)
             implementation(libs.jb.lifecycleViewmodelSavedState)

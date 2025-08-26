@@ -16,7 +16,6 @@ fun NavGraphBuilder.comingSoonScreen() {
         NavigationRoutes.Merch.NavigationRoute.route,
         NavigationRoutes.Fanzone.NavigationRoute.route,
         NavigationRoutes.Library.NavigationRoute.route,
-        NavigationRoutes.Events.NavigationRoute.route,
     )
 
     routes.forEach { route ->

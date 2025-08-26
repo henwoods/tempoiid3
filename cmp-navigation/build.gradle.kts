@@ -24,6 +24,7 @@ kotlin {
             implementation(projects.feature.onboarding)
             implementation(projects.feature.settings)
             implementation(projects.feature.imagepick)
+            implementation(projects.feature.events)
 
             implementation(compose.material3)
             implementation(compose.foundation)

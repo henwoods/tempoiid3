@@ -8,6 +8,7 @@ import com.oiid.core.data.ui.TabRepository
 import com.oiid.core.datastore.di.DatastoreModule
 import com.oiid.feature.auth.AuthModule
 import com.oiid.feature.auth.OnboardingModule
+import com.oiid.feature.events.di.EventsModule
 import com.oiid.feature.feed.di.FeedModule
 import com.oiid.feature.imagepick.ImagePickModule
 import com.oiid.feature.settings.ProfileModule
@@ -54,5 +55,6 @@ object KoinModules {
         FeatureModule,
         AppModule,
         SplashModule,
+        EventsModule
     )
 }

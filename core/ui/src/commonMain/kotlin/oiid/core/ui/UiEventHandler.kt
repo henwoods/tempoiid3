@@ -1,5 +1,6 @@
 package oiid.core.ui
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.oiid.core.LocalSnackbarHostState

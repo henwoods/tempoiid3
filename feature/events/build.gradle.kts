@@ -5,14 +5,10 @@ plugins {
 }
 
 android {
-    namespace = "com.oiid.feature.feed"
+    namespace = "com.oiid.feature.events"
 }
 
 kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
-    }
-
     sourceSets {
         commonMain.dependencies {
             implementation(projects.coreBase.platform)
@@ -24,7 +20,6 @@ kotlin {
             implementation(projects.core.designsystem)
             implementation(projects.core.network)
             implementation(projects.core.datastore)
-            implementation(libs.calf.permissions)
 
             implementation(compose.ui)
             implementation(compose.foundation)
@@ -36,8 +31,6 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(projects.coreBase.datastore)
 
-            implementation(projects.feature.onboarding)
-            implementation(projects.feature.player)
             implementation(libs.kermit.logging)
             implementation(libs.coil.kt.compose)
             implementation(libs.coil.network.ktor)
@@ -46,14 +39,8 @@ kotlin {
             implementation(libs.composables.core)
         }
 
-        // chaintech player doesn't currently support JS
-        nonJsCommonMain.dependencies {
-            implementation(libs.chaintech.compose.multiplatform.media.player)
-        }
-
         androidMain.dependencies {
-            implementation(libs.androidx.media3.exoplayer)
-            implementation(libs.androidx.media3.ui)
+            implementation(libs.androidx.browser)
         }
     }
 }

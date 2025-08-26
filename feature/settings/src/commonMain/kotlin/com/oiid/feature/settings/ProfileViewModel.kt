@@ -66,6 +66,7 @@ class ProfileViewModel(
             is Resource.Loading -> ProfileUiState.Loading
             is Resource.Error -> ProfileUiState.Error(resource.exception.message ?: "Unknown error")
             is Resource.Success -> {
+                // If the user id isn't initialized then show loading progress rather than cached data.
                 if (!this::userId.isInitialized) {
                     Logger.d("No used id yet")
                     ProfileUiState.Loading

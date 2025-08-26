@@ -183,7 +183,7 @@ fun Typography.toOiidTypography(fontFamily: FontFamily? = FontFamily.Default): O
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
         ),
-        titleSmall = this.titleSmall.copy(fontFamily = fontFamily),
+        titleSmall = this.titleSmall.copy(fontFamily = fontFamily, fontWeight = FontWeight.Bold),
         bodyLarge = this.bodyLarge.copy(
             fontFamily = fontFamily,
             lineHeightStyle = LineHeightStyle(

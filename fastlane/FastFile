@@ -68,7 +68,6 @@ platform :android do
 
     ENV["AWS_ACCESS_KEY_ID"] = r2_config[:access_key_id]
     ENV["AWS_SECRET_ACCESS_KEY"] = r2_config[:secret_access_key]
-
     flavor_apks = {
       "enslaved" => build_paths[:enslaved_apk_path],
       "orionsbelte" => build_paths[:orionsbelte_apk_path]

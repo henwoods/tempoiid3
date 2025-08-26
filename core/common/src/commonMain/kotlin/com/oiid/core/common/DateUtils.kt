@@ -2,6 +2,17 @@ package com.oiid.core.common
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.format.MonthNames
+import kotlinx.datetime.format.char
+
+val DATE_TIME_FORMAT_ABBREVIATED = LocalDateTime.Format {
+    monthName(MonthNames.ENGLISH_ABBREVIATED)
+    char(' ')
+    dayOfMonth()
+    chars(", ")
+    year()
+}
 
 fun formatRelativeTime(pastMillis: Instant, nowMillis: Long = Clock.System.now().toEpochMilliseconds()): String {
     val diff = nowMillis - pastMillis.toEpochMilliseconds()

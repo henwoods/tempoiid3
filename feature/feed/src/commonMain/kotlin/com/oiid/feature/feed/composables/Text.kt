@@ -3,10 +3,7 @@ package com.oiid.feature.feed.composables
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import oiid.core.base.designsystem.theme.OiidTheme.typography
 
 @Composable
 fun FeedItemTitle(title: String) {

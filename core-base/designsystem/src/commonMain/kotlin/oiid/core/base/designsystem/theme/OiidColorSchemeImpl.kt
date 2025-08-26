@@ -115,7 +115,7 @@ data class OiidTypographyImpl(
         letterSpacing = 0.15.sp,
     ),
     override val titleSmall: TextStyle = TextStyle(
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.1.sp,
@@ -304,7 +304,7 @@ class OiidTypographyBuilder {
     var headlineSmall: TextStyle = TextStyle(fontWeight = FontWeight.Normal, fontSize = 24.sp)
     var titleLarge: TextStyle = TextStyle(fontWeight = FontWeight.Normal, fontSize = 22.sp)
     var titleMedium: TextStyle = TextStyle(fontWeight = FontWeight.Normal, fontSize = 16.sp)
-    var titleSmall: TextStyle = TextStyle(fontWeight = FontWeight.Normal, fontSize = 14.sp)
+    var titleSmall: TextStyle = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp)
     var bodyLarge: TextStyle = TextStyle(fontWeight = FontWeight.Thin, fontSize = 18.sp)
     var bodyMedium: TextStyle = TextStyle(fontWeight = FontWeight.Normal, fontSize = 14.sp)
     var bodySmall: TextStyle = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp)

@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.oiid.core.designsystem.diagonalCornerShape
+import oiid.core.base.designsystem.theme.OiidTheme
 
 @Composable
 fun PostCard(
@@ -19,6 +21,7 @@ fun PostCard(
     shape: Shape = diagonalCornerShape(),
     onCardClick: () -> Unit,
     content: @Composable () -> Unit,
+    actionItems: @Composable (() -> Unit)? = null,
 ) {
     Card(
         shape = shape,
@@ -27,7 +30,14 @@ fun PostCard(
         onClick = onCardClick,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            content()
+            Box(modifier = Modifier.fillMaxSize()) {
+                content()
+            }
+            if (actionItems != null) {
+                Box(modifier = Modifier.align(Alignment.TopStart).fillMaxWidth().padding(OiidTheme.spacing.sm)) {
+                    actionItems()
+                }
+            }
         }
     }
 }

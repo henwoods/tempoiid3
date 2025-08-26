@@ -5,8 +5,10 @@ import com.oiid.core.common.APIConfig.Companion.apiConfig
 import com.oiid.core.datastore.SettingsTokenStorage
 import com.oiid.core.datastore.TokenStorage
 import com.oiid.network.api.AuthApiService
+import com.oiid.network.api.EventsApiService
 import com.oiid.network.api.UserApiService
 import com.oiid.network.api.createAuthApiService
+import com.oiid.network.api.createEventsApiService
 import com.oiid.network.api.createUserApiService
 import com.oiid.network.impl.AuthServiceImpl
 import de.jensklingenberg.ktorfit.Ktorfit
@@ -79,6 +81,7 @@ val NetworkModule = module {
     single<AuthApiService> { get<Ktorfit>().createAuthApiService() }
     single<AuthService> { AuthServiceImpl() }
     single<UserApiService> { get<Ktorfit>().createUserApiService() }
+    single<EventsApiService> { get<Ktorfit>().createEventsApiService() }
 }
 
 private class KermitLogger : io.ktor.client.plugins.logging.Logger {

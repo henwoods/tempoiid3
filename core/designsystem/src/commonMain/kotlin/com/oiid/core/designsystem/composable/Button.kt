@@ -29,13 +29,13 @@ fun AuthButton(modifier: Modifier = Modifier, text: String, enabled: Boolean, on
     Button(
         modifier = modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
-            containerColor = OiidTheme.colorScheme.onSurface,
-            contentColor = OiidTheme.colorScheme.surface,
+            containerColor = colorScheme.onSurface,
+            contentColor = colorScheme.surface,
         ),
         enabled = enabled,
         shape = RoundedCornerShape(size = OiidTheme.spacing.sm),
         onClick = onClick,
-        content = { Text(text.uppercase(), style = OiidTheme.typography.bodyLarge.copy(fontSize = 20.sp)) },
+        content = { Text(text = text.uppercase(), style = typography.bodyLarge.copy(fontSize = 20.sp)) },
     )
 }
 
@@ -47,7 +47,7 @@ fun AuthTextButton(modifier: Modifier = Modifier, text: String, enabled: Boolean
             Text(
                 text = text,
                 textDecoration = TextDecoration.Underline,
-                style = OiidTheme.typography.bodyLarge.copy(fontStyle = FontStyle.Italic),
+                style = typography.bodyLarge.copy(fontStyle = FontStyle.Italic),
             )
         },
         enabled = enabled,
@@ -65,7 +65,7 @@ fun AuthTextButton(
     TextButton(
         modifier = modifier.padding(horizontal = OiidTheme.spacing.sm),
         colors = ButtonDefaults.textButtonColors().copy(
-            contentColor = MaterialTheme.colorScheme.onPrimary,
+            contentColor = colorScheme.onPrimary,
         ),
         onClick = {
             if (enabled) {

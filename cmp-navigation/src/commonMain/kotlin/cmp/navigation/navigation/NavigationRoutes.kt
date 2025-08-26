@@ -40,7 +40,7 @@ sealed class NavigationRoutes {
     }
 
     sealed class Events(val route: String) : NavigationRoutes() {
-        object NavigationRoute : Profile(route = "events")
+        object NavigationRoute : Events(route = "events")
     }
 
     sealed class Merch(val route: String) : NavigationRoutes() {
