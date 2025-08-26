@@ -1,0 +1,55 @@
+package oiid.core.base.designsystem.layout
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import oiid.core.base.designsystem.theme.OiidTheme
+
+@Composable
+fun OiidSplitPane(
+    leftContent: @Composable () -> Unit,
+    rightContent: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    initialSplitRatio: Float = 0.5f,
+    minLeftWidth: Dp = 200.dp,
+    minRightWidth: Dp = 200.dp,
+    resizable: Boolean = true,
+    dividerColor: Color = OiidTheme.colorScheme.outline,
+    dividerWidth: Dp = 1.dp,
+) {
+    var splitRatio by remember { mutableFloatStateOf(initialSplitRatio) }
+
+    Row(
+        modifier = modifier
+            .fillMaxSize()
+            .testTag("OiidSplitPane"),
+    ) {
+        Box(
+            modifier = Modifier.weight(splitRatio),
+        ) {
+            leftContent()
+        }
+
+        VerticalDivider(
+            thickness = dividerWidth,
+            color = dividerColor,
+        )
+
+        Box(
+            modifier = Modifier.weight(1f - splitRatio),
+        ) {
+            rightContent()
+        }
+    }
+}

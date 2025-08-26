@@ -1,0 +1,45 @@
+plugins {
+  alias(libs.plugins.cmp.feature.convention)
+  alias(libs.plugins.kotlin.parcelize)
+  alias(libs.plugins.kotlin.serialization)
+}
+
+android {
+  namespace = "com.oiid.feature.player"
+}
+
+kotlin {
+  compilerOptions {
+    freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
+  }
+
+  sourceSets {
+    commonMain.dependencies {
+      implementation(projects.core.model)
+      implementation(projects.core.common)
+      implementation(projects.core.config)
+      implementation(projects.core.designsystem)
+      implementation(projects.core.network)
+
+      implementation(compose.ui)
+      implementation(compose.foundation)
+      implementation(compose.material3)
+      implementation(compose.components.resources)
+      implementation(compose.components.uiToolingPreview)
+
+      implementation(projects.feature.onboarding)
+      implementation(libs.kermit.logging)
+    }
+
+
+    // chaintech player doesn't currently support JS
+    nonJsCommonMain.dependencies {
+      implementation(libs.chaintech.compose.multiplatform.media.player)
+    }
+
+    androidMain.dependencies {
+      implementation(libs.androidx.media3.exoplayer)
+      implementation(libs.androidx.media3.ui)
+    }
+  }
+}

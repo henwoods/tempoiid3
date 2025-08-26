@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="welcome_1_title" tools:ignore="ResourceName" />
+    <string name="welcome_1_body" tools:ignore="ResourceName" />
+    <string name="welcome_2_title" tools:ignore="ResourceName" />
+    <string name="welcome_2_body" tools:ignore="ResourceName" />
+    <string name="welcome_3_title" tools:ignore="ResourceName" />
+    <string name="welcome_3_body" tools:ignore="ResourceName" />
+    <string name="welcome_4_title" tools:ignore="ResourceName" />
+    <string name="welcome_4_body" tools:ignore="ResourceName" />
+    <string name="superfan_singular" tools:ignore="ResourceName">Superfan</string>
+    <string name="superfan_plural" tools:ignore="ResourceName">Superfans</string>
+</resources>

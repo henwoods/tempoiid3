@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CMP App</string>
+    <string name="home">Home</string>
+    <string name="events">Events</string>
+    <string name="library">Library</string>
+    <string name="store">Merch</string>
+    <string name="fanzone">Fan Zone</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="not_connected">⚠️ You aren’t connected to the internet</string>
+</resources>

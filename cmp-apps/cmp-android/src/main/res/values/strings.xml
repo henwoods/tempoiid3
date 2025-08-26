@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidApp</string>
+    <string name="feed">Feed</string>
+    <string name="not_connected">⚠️ You aren’t connected to the internet</string>
+    <string name="welcome_1_title" />
+    <string name="welcome_1_body" />
+    <string name="welcome_2_title" />
+    <string name="welcome_2_body" />
+    <string name="welcome_3_title" />
+    <string name="welcome_3_body" />
+    <string name="welcome_4_title" />
+    <string name="welcome_4_body" />
+    <string name="superfan_singular">Superfan</string>
+    <string name="superfan_plural">Superfans</string>
+</resources>

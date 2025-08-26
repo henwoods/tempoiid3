@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Orions Belte</string>
+    <string name="welcome_1_title">Welcome to Our Orbit</string>
+    <string name="welcome_1_body">Hey, you’re here. Cool. This is where the music lives—somewhere between space and time. Explore the vibes, find your own groove, and let’s drift together through soundscapes we’ve crafted just for you.</string>
+    <string name="welcome_2_title">Behind the Music</string>
+    <string name="welcome_2_body">Ever wonder how a track comes to life? Dig into the layers of our sound, from quiet chords to the rhythms that keep it all moving. This is where the small details come together to create the bigger picture.</string>
+    <string name="welcome_3_title">Find Us Live</string>
+    <string name="welcome_3_body">Want to join us in the moment? Get first access to shows and gigs—where the sound gets raw, the lights get dim, and the music fills the space around us. See you out there.</string>
+    <string name="welcome_4_title">Merch &amp; Mood</string>
+    <string name="welcome_4_body">This is more than music—it’s a feeling. From records to artwork
+        to the small things that make life a little cooler, it’s all here. Take what speaks to you and let it ride with you on your own journey.</string>
+</resources>

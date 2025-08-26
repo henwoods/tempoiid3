@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Enslaved</string>
+    <string name="welcome_1_title">Embark on the Cosmic Voyage</string>
+    <string name="welcome_1_body">Welcome, traveler. You stand at the threshold where time is but a whisper and the cosmos unfolds its ancient tales. Immerse yourself in the realms we\'ve forged—let the harmonies guide you through the mysteries of sound and existence.</string>
+    <string name="welcome_2_title">Unveiling the Sonic Runes</string>
+    <string name="welcome_2_body">Have you pondered the genesis of our melodies? Delve into the intricate weavings of our compositions, from the primordial riffs to the ethereal rhythms that bind them. Witness how each element converges to manifest the grand tapestry of our art.</string>
+
+    <string name="welcome_3_title">Join Our Rituals</string>
+    <string name="welcome_3_body">Yearn to be part of the living saga? Gain privileged access to our gatherings—where raw energy converges with shadowed ambiance, and the music resonates through the very fabric of reality. We await your presence in the forthcoming rites.</string>
+    <string name="welcome_4_title">Artifacts and Echoes</string>
+    <string name="welcome_4_body">Our craft transcends mere sound—it embodies a journey. From vinyl relics to visual manifestations, discover the tokens that resonate with your spirit and accompany you on your personal odyssey through the cosmic expanse.</string>
+</resources>

@@ -1,0 +1,32 @@
+[
+  {
+    "route": "library",
+    "title": "Library",
+    "asset": "Catalog2",
+    "type": "catalog3"
+  },
+  {
+    "route": "events",
+    "title": "Events",
+    "asset": "Tickets2",
+    "type": "events"
+  },
+  {
+    "route": "feed",
+    "title": "",
+    "asset": "Enslaved2",
+    "type": "feed"
+  },
+  {
+    "route": "fanzone",
+    "title": "Fan-zone",
+    "asset": "Fanzone",
+    "type": "forum"
+  },
+  {
+    "route": "profile",
+    "title": "Profile",
+    "asset": "Profile3",
+    "type": "profile"
+  }
+]

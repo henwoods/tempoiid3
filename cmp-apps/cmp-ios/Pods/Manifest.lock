@@ -1,0 +1,16 @@
+PODS:
+  - cmp_shared (1.0)
+
+DEPENDENCIES:
+  - cmp_shared (from `../../cmp-shared`)
+
+EXTERNAL SOURCES:
+  cmp_shared:
+    :path: "../../cmp-shared"
+
+SPEC CHECKSUMS:
+  cmp_shared: 3d27ba5445c8775afa1095ecd119be5b03bf813d
+
+PODFILE CHECKSUM: 6f0a96c31b174ce3af7bd6bac5a2cf06bfbb9aac
+
+COCOAPODS: 1.16.2
