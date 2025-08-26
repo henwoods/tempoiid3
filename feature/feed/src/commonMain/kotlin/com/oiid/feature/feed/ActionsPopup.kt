@@ -10,8 +10,8 @@ import com.oiid.core.designsystem.composable.OPTION_KEY_EDIT
 import com.oiid.core.designsystem.composable.OPTION_KEY_REPLY
 import com.oiid.core.designsystem.composable.OPTION_KEY_REPORT
 import com.oiid.core.designsystem.composable.PopupMenu
-import com.oiid.feature.feed.list.FeedIntent
-import com.oiid.feature.feed.list.PostIntent
+import oiid.core.ui.FeedIntent
+import oiid.core.ui.PostIntent
 
 @Composable
 fun CommentActionsPopup(id: String, onStartReplying: () -> Unit, onHandleIntent: (PostIntent) -> Unit) {

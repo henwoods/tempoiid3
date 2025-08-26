@@ -42,8 +42,6 @@ abstract class FeedServiceImpl(
         val cachedItems = getAllFeedItemsFromCache()
         if (cachedItems.isNotEmpty()) {
             val cachedItemsWithLikedStatus = cachedItems.map { feedItem ->
-                Logger.d("WTF currentUserId ${currentUserId} - feedItem.userId ${feedItem.userId}")
-
                 feedItem.copy(
                     isLikedByUser = likedPostIds.contains(feedItem.id),
                     isPostByUser = feedItem.userId == currentUserId
@@ -60,8 +58,6 @@ abstract class FeedServiceImpl(
             val posts = config.getPosts(artistId)
 
             val feedItemsWithLikedStatus = posts.map { feedItem ->
-                Logger.d("WTF currentUserId ${currentUserId} - feedItem.userId ${feedItem.userId}")
-
                 feedItem.copy(
                     isLikedByUser = likedPostIds.contains(feedItem.id),
                     isPostByUser = feedItem.userId == currentUserId

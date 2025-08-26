@@ -2,7 +2,6 @@ package com.oiid.feature.feed.list
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
-import com.oiid.core.config.artistId
 import com.oiid.core.datastore.UserPreferencesRepository
 import com.oiid.core.model.PostItem
 import com.oiid.core.model.api.Resource
@@ -23,30 +22,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import oiid.core.base.datastore.exceptions.InvalidKeyException
+import oiid.core.ui.FeedIntent
 
 data class NavToPost(val item: PostItem, val hasNavigated: Boolean)
-
-sealed interface FeedIntent {
-    data class SavePost(val title: String, val content: String) : FeedIntent
-    data class ReportPost(val postId: String) : FeedIntent
-    data class LikePost(val postId: String) : FeedIntent
-    data class EditPost(val postId: String) : FeedIntent
-    data class ItemSelected(val item: PostItem?) : FeedIntent
-    data class ErrorOccurred(val message: String) : FeedIntent
-    data object RetryLoad : FeedIntent
-}
-
-sealed interface PostIntent {
-    data class LikePost(val postId: String) : PostIntent
-    data class LikeComment(val commentId: String) : PostIntent
-    data class ReportPost(val postId: String) : PostIntent
-    data class ReportComment(val commentId: String) : PostIntent
-    data class EditPost(val postId: String) : PostIntent
-    data class CommentOnPost(val postId: String, val content: String) : PostIntent
-    data class ReplyToComment(val commentId: String, val content: String) : PostIntent
-    data class ErrorOccurred(val message: String) : PostIntent
-    data object RetryLoad : PostIntent
-}
 
 class FeedViewModel(
     private val feedService: FeedServiceImpl,
@@ -58,7 +36,6 @@ class FeedViewModel(
 
     private val _uiEvent = MutableSharedFlow<UiEvent>()
     val uiEvent: SharedFlow<UiEvent> = _uiEvent
-
     init {
         Logger.d("FeedViewModel created: ${this.hashCode()}")
     }
@@ -67,23 +44,24 @@ class FeedViewModel(
     val uiState: StateFlow<FeedUiState> = feedService.getPosts()
         .map { resource ->
             when (resource) {
-                is Resource.Loading -> FeedUiState(isLoading = true, isForum =  false)
-                is Resource.Success -> FeedUiState(posts = resource.data, isLoading = false, isForum =  false)
+                is Resource.Loading -> FeedUiState(isLoading = true, isForum = false)
+                is Resource.Success -> FeedUiState(posts = resource.data, isLoading = false, isForum = false)
                 is Resource.Error -> FeedUiState(
                     error = if (resource.exception is InvalidKeyException) {
                         "User was signed out."
                     } else {
                         "Failed to load feed."
-                    }, isForum =  false
+                    },
+                    isForum = false,
                 )
             }
         }
         .distinctUntilChanged()
-        .catch { emit(FeedUiState(error = "Failed to load feed.", isForum =  false)) }
+        .catch { emit(FeedUiState(error = "Failed to load feed.", isForum = false)) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = FeedUiState(isLoading = true, isForum =  false),
+            initialValue = FeedUiState(isLoading = true, isForum = false),
         )
 
     val isOnboardingCompleted = userPreferencesRepository.observeOnboardingComplete()
@@ -96,69 +74,55 @@ class FeedViewModel(
         }
     }
 
-    fun onLikeClicked(postId: String) {
-        launchCatching {
-            val success = feedService.toggleLikePost(postId)
-            if (!success) {
-                _uiEvent.emit(UiEvent.ShowSnackbar("Liking post failed."))
-            }
-        }
-    }
-
-    fun setOnboardingComplete() {
-        viewModelScope.launch {
-            userPreferencesRepository.onboardingComplete()
-        }
-    }
-
-    fun onFeedItemSelected(item: PostItem?) {
-        viewModelScope.launch {
-            if (item != null) {
-                _selectedItem.value = NavToPost(item, false)
-            } else {
-                _selectedItem.value = null
-            }
-        }
+    fun setOnboardingComplete() = launchCatching {
+        userPreferencesRepository.onboardingComplete()
     }
 
     fun setHasNavigated(hasNavigated: Boolean) {
         _selectedItem.update { it?.copy(hasNavigated = hasNavigated) }
     }
 
-    fun retryLoad() {
-        launchCatching {
-            feedService.loadPosts()
+    fun onFeedItemSelected(item: PostItem?) = launchCatching {
+        if (item != null) {
+            _selectedItem.value = NavToPost(item, false)
+        } else {
+            _selectedItem.value = null
         }
     }
 
-    private fun showSnackbar(message: String) = viewModelScope.launch {
-        _uiEvent.emit(UiEvent.ShowSnackbar(message))
+    fun retryLoad() = launchCatching {
+        feedService.loadPosts()
+    }
+
+    fun savePost(title: String, content: String) = launchCatching {
+        feedService.createPost(title, content)
+    }
+
+    fun reportPost(id: String) = launchCatching {
+        feedService.reportPost(id)
+    }
+
+    fun onLikeClicked(postId: String) = launchCatching {
+        val success = feedService.toggleLikePost(postId)
+        if (!success) {
+            snackbar("Liking post failed.")
+        }
     }
 
     fun handleIntent(intent: FeedIntent) {
         when (intent) {
-            is FeedIntent.ErrorOccurred -> showSnackbar(message = intent.message)
+            is FeedIntent.LikePost -> onLikeClicked(intent.postId)
+            is FeedIntent.SavePost -> savePost(intent.title, intent.content)
+            is FeedIntent.EditPost -> {}
+            is FeedIntent.ReportPost -> reportPost(intent.postId)
 
-            is FeedIntent.LikePost -> {
-                onLikeClicked(intent.postId)
-            }
-
-            is FeedIntent.RetryLoad -> {
-                retryLoad()
-            }
-
-            is FeedIntent.ItemSelected -> {
-                onFeedItemSelected(intent.item)
-            }
-
-            is FeedIntent.SavePost -> {
-                viewModelScope.launch {
-                    feedService.createPost(intent.title, intent.title)
-                }
-            }
-
-            is FeedIntent.ReportPost -> TODO()
-            is FeedIntent.EditPost -> TODO()
+            is FeedIntent.ItemSelected -> onFeedItemSelected(intent.item)
+            is FeedIntent.ErrorOccurred -> snackbar(intent.message)
+            is FeedIntent.RetryLoad -> retryLoad()
         }
+    }
+
+    private fun snackbar(message: String) = viewModelScope.launch {
+        _uiEvent.emit(UiEvent.ShowSnackbar(message))
     }
 }

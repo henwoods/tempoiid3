@@ -1,7 +1,8 @@
 package cmp.navigation.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -27,10 +28,10 @@ fun NavGraphBuilder.feedGraph(
     ) {
         composable(
             route = NavigationRoutes.Feed.List.route,
-            enterTransition = { EnterTransition.None },
-            exitTransition = { ExitTransition.None },
-            popEnterTransition = { EnterTransition.None },
-            popExitTransition = { ExitTransition.None },
+            enterTransition = { fadeIn(animationSpec = tween(300)) },
+            exitTransition = { fadeOut(animationSpec = tween(300)) },
+            popEnterTransition = { fadeIn(animationSpec = tween(300)) },
+            popExitTransition = { fadeOut(animationSpec = tween(300)) }
         ) {
             HomeFeedScreen(
                 modifier = modifier,
@@ -51,6 +52,7 @@ fun NavGraphBuilder.feedGraph(
                 modifier = modifier,
                 postId = args.postId,
                 artistId = args.artistId,
+                isForum = true,
                 onBackClick = { navController.popBackStack() },
             )
         }

@@ -106,7 +106,7 @@ class AppState(
                 TopLevelDestination.Home -> navController.navigate(NavigationRoutes.Feed.List.route, topLevelNavOptions)
                 TopLevelDestination.Library -> navController.navigateToComingSoon(NavigationRoutes.Library.NavigationRoute.route, topLevelNavOptions)
                 TopLevelDestination.Events -> navController.navigateToComingSoon(NavigationRoutes.Events.NavigationRoute.route, topLevelNavOptions)
-                TopLevelDestination.Fanzone -> navController.navigateToComingSoon(NavigationRoutes.Fanzone.NavigationRoute.route, topLevelNavOptions)
+                TopLevelDestination.Fanzone -> navController.navigate(NavigationRoutes.Fanzone.NavigationRoute.route, topLevelNavOptions)
                 TopLevelDestination.Profile -> navController.navigateToProfile(topLevelNavOptions)
                 TopLevelDestination.Merch -> navController.navigateToComingSoon(NavigationRoutes.Merch.NavigationRoute.route, topLevelNavOptions)
             }

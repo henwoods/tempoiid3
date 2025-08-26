@@ -1,7 +1,8 @@
 package cmp.navigation.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
@@ -14,8 +15,10 @@ fun NavGraphBuilder.eventsScreen(
 ) {
     composable(
         route = NavigationRoutes.Events.NavigationRoute.route,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
+        enterTransition = { fadeIn(animationSpec = tween(300)) },
+        exitTransition = { fadeOut(animationSpec = tween(300)) },
+        popEnterTransition = { fadeIn(animationSpec = tween(300)) },
+        popExitTransition = { fadeOut(animationSpec = tween(300)) }
     ) {
         EventsScreen(
             modifier = modifier,

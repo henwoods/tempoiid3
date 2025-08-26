@@ -7,7 +7,7 @@ import com.oiid.core.common.formatRelativeTime
 import com.oiid.core.designsystem.composable.FeedItemDetails
 import com.oiid.core.model.PostComment
 import com.oiid.feature.feed.CommentActionsPopup
-import com.oiid.feature.feed.list.PostIntent
+import oiid.core.ui.PostIntent
 
 @Composable
 fun CommentContent(
@@ -18,6 +18,7 @@ fun CommentContent(
     FeedItemDetails(
         name = comment.name,
         createdAt = formatRelativeTime(comment.createdAt),
+        isForum = false,
         actions = {
             CommentActionsPopup(comment.commentId,  { onStartReplying(comment) }, onHandleIntent)
         },

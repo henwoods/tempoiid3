@@ -36,7 +36,8 @@ sealed class NavigationRoutes {
     }
 
     sealed class Fanzone(val route: String) : NavigationRoutes() {
-        object NavigationRoute : Profile(route = "fanzone")
+        object NavigationRoute : Fanzone(route = "fanzone")
+        object Detail : Feed("forum/{postId}/{artistId}")
     }
 
     sealed class Events(val route: String) : NavigationRoutes() {

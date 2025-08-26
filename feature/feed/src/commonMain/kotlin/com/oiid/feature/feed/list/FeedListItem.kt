@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import com.oiid.core.designsystem.diagonalCornerShape
 import com.oiid.core.model.PostItem
 import com.oiid.feature.feed.composables.PostCard
+import oiid.core.ui.FeedIntent
 
 data class FeedListItemUiState(val post: PostItem, val isPlaying: Boolean, val isForum: Boolean, val isDetail: Boolean)
 
@@ -19,9 +20,8 @@ fun FeedListItem(
     onEnterFullscreen: ((String?) -> Unit)? = null,
 ) {
     PostCard(
-        onCardClick = {
-            onHandleIntent(FeedIntent.ItemSelected(uiState.post))
-        },
+        onHandleIntent = onHandleIntent,
+        uiState = uiState,
         shape = diagonalCornerShape(),
         content = {
             Column {
@@ -35,17 +35,8 @@ fun FeedListItem(
                 )
 
                 FeedItemActions(
-                    uiState.post,
-                    {
-                        onHandleIntent(FeedIntent.LikePost(uiState.post.id))
-                    },
-                    {
-                        onHandleIntent(
-                            FeedIntent.ItemSelected(
-                                uiState.post,
-                            ),
-                        )
-                    },
+                    post = uiState.post,
+                    onHandleIntent = onHandleIntent,
                 )
             }
         },

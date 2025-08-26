@@ -25,6 +25,7 @@ kotlin {
             implementation(projects.feature.settings)
             implementation(projects.feature.imagepick)
             implementation(projects.feature.events)
+            implementation(projects.feature.fanzone)
 
             implementation(compose.material3)
             implementation(compose.foundation)

@@ -88,6 +88,8 @@ internal fun FeatureNavHost(
 
         eventsScreen(modifier, appBar)
 
+        fanzoneScreen(modifier, navController)
+
         comingSoonScreen()
     }
 }

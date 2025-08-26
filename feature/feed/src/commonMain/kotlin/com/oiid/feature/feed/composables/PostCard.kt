@@ -13,13 +13,16 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.oiid.core.designsystem.diagonalCornerShape
+import com.oiid.feature.feed.list.FeedListItemUiState
 import oiid.core.base.designsystem.theme.OiidTheme
+import oiid.core.ui.FeedIntent
 
 @Composable
 fun PostCard(
     modifier: Modifier = Modifier,
+    uiState: FeedListItemUiState,
     shape: Shape = diagonalCornerShape(),
-    onCardClick: () -> Unit,
+    onHandleIntent: (FeedIntent) -> Unit,
     content: @Composable () -> Unit,
     actionItems: @Composable (() -> Unit)? = null,
 ) {
@@ -27,7 +30,9 @@ fun PostCard(
         shape = shape,
         modifier = modifier.fillMaxWidth().padding(horizontal = 0.dp).shadow(0.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        onClick = onCardClick,
+        onClick = {
+            onHandleIntent(FeedIntent.ItemSelected(uiState.post))
+        },
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Box(modifier = Modifier.fillMaxSize()) {

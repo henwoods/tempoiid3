@@ -130,6 +130,8 @@ abstract class PostServiceImpl(
 
             loadPost()
 
+            config.updateFeedCacheAfterComment(postId)
+
             postedComment
         } catch (e: Exception) {
             Logger.e("${config.tag} Error posting comment: ${e.message}")
@@ -154,6 +156,8 @@ abstract class PostServiceImpl(
 
             loadPost()
 
+            config.updateFeedCacheAfterComment(postId)
+
             postedReply
         } catch (e: Exception) {
             Logger.e("${config.tag} Error posting reply: ${e.message}")
@@ -172,10 +176,7 @@ abstract class PostServiceImpl(
                 config.getPost(artistId, postId)
                 Logger.d { "${config.tag} Successfully fetched updated post data after like action" }
 
-                val cachedItem = config.getPostFromCache(postId)
-                if (cachedItem != null) {
-                    Logger.d { "${config.tag} Post found in feed cache, it will be updated on next feed refresh" }
-                }
+                config.updateFeedCacheAfterLike(postId)
             } catch (e: Exception) {
                 Logger.e("${config.tag} Error fetching updated post data after like: ${e.message}")
             }

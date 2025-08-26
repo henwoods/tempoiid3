@@ -32,14 +32,14 @@ import com.oiid.core.designsystem.generated.resources.liked
 import com.oiid.core.model.PostItem
 import oiid.core.base.designsystem.theme.OiidTheme
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
+import oiid.core.ui.FeedIntent
 import org.jetbrains.compose.resources.imageResource
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun FeedItemActions(
-    entity: PostItem,
+    post: PostItem,
     onHandleIntent: (FeedIntent) -> Unit,
-    onCommentClicked: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(
@@ -49,7 +49,7 @@ fun FeedItemActions(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        if (entity.isPinned) {
+        if (post.isPinned) {
             IconButton(modifier = Modifier.size(28.dp), onClick = {}) {
                 Icon(
                     imageVector = Icons.Outlined.PushPin,
@@ -62,18 +62,20 @@ fun FeedItemActions(
 
         Row(horizontalArrangement = Arrangement.spacedBy(OiidTheme.spacing.md)) {
             FeedItemTextAction(
-                text = "${entity.numberOfLikes} likes",
+                text = "${post.numberOfLikes} likes",
                 onClick = {
-                    onHandleIntent(FeedIntent.LikePost(entity.id))
+                    onHandleIntent(FeedIntent.LikePost(post.id))
                 },
                 painter = painterResource(
-                    if (entity.isLikedByUser) Res.drawable.liked else Res.drawable.like,
+                    if (post.isLikedByUser) Res.drawable.liked else Res.drawable.like,
                 ),
-                brush = if (entity.isLikedByUser) colorScheme.gradients.gradient else null,
+                brush = if (post.isLikedByUser) colorScheme.gradients.gradient else null,
             )
             FeedItemTextAction(
-                text = "${entity.numberOfComments} comments",
-                onClick = onCommentClicked,
+                text = "${post.numberOfComments} comments",
+                onClick = {
+                    onHandleIntent(FeedIntent.ItemSelected(post))
+                },
                 bitmap = imageResource(Res.drawable.comment),
             )
         }

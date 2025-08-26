@@ -23,6 +23,7 @@ import com.oiid.feature.feed.UserPostActionsPopup
 import com.oiid.feature.player.video.VideoPlayer
 import oiid.core.base.designsystem.theme.OiidTheme
 import oiid.core.base.designsystem.theme.OiidTheme.spacing
+import oiid.core.ui.FeedIntent
 
 @Composable
 fun FeedContent(
@@ -45,6 +46,7 @@ fun FeedContent(
                 modifier = Modifier.padding(top = spacing.md, start = spacing.md, end = spacing.md),
                 name = post.name,
                 createdAt = formatRelativeTime(post.createdAt),
+                isForum = uiState.isForum,
                 actions = {
                     if(post.isPostByUser){
                         UserPostActionsPopup(post.id, onHandleIntent)
@@ -93,7 +95,9 @@ fun FeedContent(
                 }
             }
 
-            HorizontalDivider(color = DividerDefaults.color.copy(alpha = 0.3f))
+            if (!uiState.isForum) {
+                HorizontalDivider(color = DividerDefaults.color.copy(alpha = 0.3f))
+            }
         }
     }
 }

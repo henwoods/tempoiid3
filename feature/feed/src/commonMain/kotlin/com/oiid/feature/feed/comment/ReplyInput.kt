@@ -15,6 +15,8 @@ fun ReplyInput(
     focusRequester: FocusRequester,
     label: String,
     value: String,
+    enabled: Boolean = true,
+    isLoading: Boolean = false,
     onValueChange: (String) -> Unit,
     onSendClick: () -> Unit,
     onCancel: () -> Unit,
@@ -26,11 +28,12 @@ fun ReplyInput(
                 focusRequester = focusRequester,
                 label = label,
                 value = value,
+                enabled = enabled,
                 onValueChange = onValueChange,
                 onCancel = onCancel,
             )
-            AnimatedVisibility(value.isNotEmpty()) {
-                SendCommentButton(value.isNotBlank(), onSendClick)
+            AnimatedVisibility(value.isNotEmpty() || isLoading) {
+                SendCommentButton(value.isNotBlank(), isLoading, onSendClick)
             }
         }
     }

@@ -36,4 +36,7 @@ interface PostServiceAdapter {
     suspend fun reportPost(artistId: String, postId: String): Boolean
     suspend fun reportComment(artistId: String, postId: String, commentId: String)
     suspend fun updatePost(artistId: String, postId: String, title: String, content: String): PostItem?
+
+    suspend fun updateFeedCacheAfterLike(postId: String)
+    suspend fun updateFeedCacheAfterComment(postId: String)
 }

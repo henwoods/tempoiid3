@@ -1,12 +1,12 @@
 package com.oiid.feature.feed.data.impl
 
+import com.oiid.core.datastore.FeedService
 import com.oiid.core.datastore.PostServiceAdapter
 import com.oiid.core.model.PostComment
 import com.oiid.core.model.PostCommentResponse
 import com.oiid.core.model.PostItem
 import com.oiid.core.model.api.Resource
 import com.oiid.core.model.api.feed.CreateCommentRequest
-import com.oiid.core.datastore.FeedService
 import com.oiid.network.api.PostApiService
 import kotlinx.coroutines.flow.Flow
 
@@ -30,11 +30,20 @@ class FeedPostServiceAdapter(
         return postApiService.getPostComments(artistId, postId)
     }
 
-    override suspend fun createComment(artistId: String, postId: String, request: CreateCommentRequest): PostCommentResponse {
+    override suspend fun createComment(
+        artistId: String,
+        postId: String,
+        request: CreateCommentRequest,
+    ): PostCommentResponse {
         return postApiService.createComment(artistId, postId, request)
     }
 
-    override suspend fun createCommentReply(artistId: String, postId: String, commentId: String, request: CreateCommentRequest): PostCommentResponse {
+    override suspend fun createCommentReply(
+        artistId: String,
+        postId: String,
+        commentId: String,
+        request: CreateCommentRequest,
+    ): PostCommentResponse {
         return postApiService.createCommentReply(artistId, postId, commentId, request)
     }
 
@@ -64,5 +73,13 @@ class FeedPostServiceAdapter(
 
     override suspend fun updatePost(artistId: String, postId: String, title: String, content: String): PostItem? {
         return feedService.updatePost(postId, title, content)
+    }
+
+    override suspend fun updateFeedCacheAfterLike(postId: String) {
+        feedService.toggleLikePost(postId)
+    }
+
+    override suspend fun updateFeedCacheAfterComment(postId: String) {
+        feedService.loadPosts()
     }
 }

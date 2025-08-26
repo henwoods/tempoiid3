@@ -22,13 +22,13 @@ import androidx.compose.ui.draw.clip
 import androidx.lifecycle.ViewModel
 import com.oiid.core.designsystem.diagonalCornerShape
 import com.oiid.core.designsystem.ext.bottomNavPadding
-import com.oiid.core.model.PostItem
 import com.oiid.core.model.PostType
 import com.oiid.core.model.postType
 import com.oiid.feature.player.video.FullscreenVideoPlayer
 import kotlin.math.abs
 import kotlinx.coroutines.delay
 import oiid.core.base.designsystem.theme.OiidTheme.spacing
+import oiid.core.ui.FeedIntent
 import org.koin.compose.viewmodel.koinViewModel
 
 class FeedListViewModel : ViewModel() {

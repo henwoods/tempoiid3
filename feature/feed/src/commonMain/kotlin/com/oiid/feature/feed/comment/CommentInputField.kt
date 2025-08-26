@@ -16,10 +16,12 @@ import oiid.core.base.designsystem.theme.OiidTheme
 fun CommentInputField(
     value: String,
     label: String,
+    enabled: Boolean,
     focusRequester: FocusRequester,
     onValueChange: (String) -> Unit,
     userName: String? = null,
     userAvatarImageUrl: String? = null,
+    isLoading: Boolean = false,
     onSendClick: () -> Unit,
     onCancel: () -> Unit,
 ) {
@@ -37,6 +39,8 @@ fun CommentInputField(
             focusRequester = focusRequester,
             onValueChange = onValueChange,
             label = label,
+            enabled = enabled,
+            isLoading = isLoading,
             onSendClick = onSendClick,
             onCancel = onCancel,
         )

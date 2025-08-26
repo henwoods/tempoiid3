@@ -4,7 +4,7 @@ import com.oiid.core.config.artistId
 import com.oiid.feature.feed.data.impl.FeedPostServiceAdapter
 import com.oiid.feature.feed.data.impl.FeedPostServiceImpl
 import com.oiid.feature.feed.data.impl.FeedServiceImpl
-import com.oiid.feature.feed.detail.FeedDetailViewModel
+import com.oiid.feature.feed.detail.FeedPostDetailViewModel
 import com.oiid.feature.feed.list.FeedListViewModel
 import com.oiid.feature.feed.list.FeedViewModel
 import com.oiid.network.api.FeedApiService
@@ -44,7 +44,7 @@ val FeedModule = module {
     }
 
     viewModel { (postId: String) ->
-        FeedDetailViewModel(
+        FeedPostDetailViewModel(
             postId = postId, artistId = artistId(),
             postService = get<FeedPostServiceImpl>(clazz = FeedPostServiceImpl::class) {
                 parametersOf(postId)

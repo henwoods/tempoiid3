@@ -100,6 +100,7 @@ include(":feature:onboarding")
 include(":feature:settings")
 include(":feature:imagepick")
 include(":feature:player")
+include(":feature:fanzone")
 
 include(":core-base:datastore")
 include(":core-base:database")

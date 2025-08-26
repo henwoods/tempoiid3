@@ -26,14 +26,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.oiid.core.designsystem.composable.InfoTextPanel
 import com.oiid.core.designsystem.composable.LinearProgress
 import com.oiid.core.designsystem.diagonalCornerShape
-import com.oiid.feature.feed.list.FeedIntent
 import com.oiid.feature.feed.list.FeedList
 import com.oiid.feature.feed.list.FeedListItem
 import com.oiid.feature.feed.list.FeedListItemUiState
@@ -43,6 +41,8 @@ import oiid.core.base.designsystem.AppStateViewModel
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.base.designsystem.theme.OiidTheme.spacing
 import oiid.core.base.designsystem.theme.OiidTheme.typography
+import oiid.core.ui.FeedIntent
+import oiid.core.ui.appBarHeight
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -55,9 +55,9 @@ fun BaseFeedScreen(
     divider: @Composable (() -> Unit)? = null,
     selectedItem: NavToPost?,
     showContent: Boolean = true,
-    setHasNavigated: (Boolean) -> Unit,
     onHandleIntent: (FeedIntent) -> Unit,
     onPostClicked: (String) -> Unit,
+    setHasNavigated: (Boolean) -> Unit,
     appStateViewModel: AppStateViewModel = koinViewModel(),
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -105,9 +105,9 @@ fun BaseFeedScreen(
                 },
                 label = "ListToDetail",
             ) { targetItem ->
-                if (targetItem == null) {
+                if (targetItem == null || uiState.isForum) {
                     Column(Modifier.padding(paddingValues).fillMaxSize()) {
-                        Column(Modifier.heightIn(max = 56.dp)) {
+                        Column(Modifier.heightIn(max = appBarHeight())) {
                             appBar()
                         }
 
@@ -164,42 +164,20 @@ fun BaseFeedScreen(
                         }
                     }
                 } else {
-                    if (uiState.isForum) {
-                        // For forum posts, show app bar even in detail view to maintain consistency
-                        Column(Modifier.padding(paddingValues).fillMaxSize()) {
-                            Column(Modifier.heightIn(max = 56.dp)) {
-                                appBar()
-                            }
-
-                            Box(modifier = Modifier.fillMaxSize()) {
-                                FeedListItem(
-                                    modifier = Modifier.clip(diagonalCornerShape()),
-                                    uiState = FeedListItemUiState(
-                                        targetItem.item,
-                                        isPlaying = false,
-                                        isForum = uiState.isForum,
-                                        isDetail = false
-                                    ),
-                                    onHandleIntent = onHandleIntent,
-                                )
-                            }
-                        }
-                    } else {
-                        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
-                            FeedListItem(
-                                modifier = Modifier.sharedElement(
-                                    sharedContentState = rememberSharedContentState(key = "item-${targetItem.item.id}"),
-                                    animatedVisibilityScope = this@AnimatedContent,
-                                ).clip(diagonalCornerShape()),
-                                uiState = FeedListItemUiState(
-                                    targetItem.item,
-                                    isPlaying = false,
-                                    isForum = uiState.isForum,
-                                    isDetail = false
-                                ),
-                                onHandleIntent = onHandleIntent,
-                            )
-                        }
+                    Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+                        FeedListItem(
+                            modifier = Modifier.sharedElement(
+                                sharedContentState = rememberSharedContentState(key = "item-${targetItem.item.id}"),
+                                animatedVisibilityScope = this@AnimatedContent,
+                            ).clip(diagonalCornerShape()),
+                            uiState = FeedListItemUiState(
+                                targetItem.item,
+                                isPlaying = false,
+                                isForum = uiState.isForum,
+                                isDetail = false,
+                            ),
+                            onHandleIntent = onHandleIntent,
+                        )
                     }
                 }
             }

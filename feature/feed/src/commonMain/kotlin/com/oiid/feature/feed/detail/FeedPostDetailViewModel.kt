@@ -3,12 +3,14 @@ package com.oiid.feature.feed.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.oiid.core.datastore.PostService
 import com.oiid.core.model.PostComment
 import com.oiid.core.model.PostItem
 import com.oiid.core.model.api.Resource
-import com.oiid.core.datastore.PostService
-import com.oiid.feature.feed.list.PostIntent
+import com.oiid.core.model.ui.UiEvent
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import oiid.core.ui.PostIntent
 import org.koin.core.component.KoinComponent
 
 data class PostDetailUiState(
@@ -24,6 +27,7 @@ data class PostDetailUiState(
     val error: String? = null,
     val postItem: PostItem? = null,
     val comments: List<PostComment> = emptyList(),
+    val isForum: Boolean,
 )
 
 data class PostCommentUiState(
@@ -31,14 +35,18 @@ data class PostCommentUiState(
     val error: String? = null,
 )
 
-open class FeedDetailViewModel(
+open class FeedPostDetailViewModel(
     private val postId: String,
     private val artistId: String,
     private val postService: PostService,
+    private val isForum: Boolean = false,
 ) : ViewModel(), KoinComponent {
 
     private val _postingCommentState = MutableStateFlow(PostCommentUiState())
     val postingCommentState: StateFlow<PostCommentUiState> = _postingCommentState.asStateFlow()
+
+    private val _uiEvent = MutableSharedFlow<UiEvent>()
+    val uiEvent: SharedFlow<UiEvent> = _uiEvent
 
     private val _editingPost = MutableStateFlow<PostItem?>(null)
     val editingPost: StateFlow<PostItem?> = _editingPost.asStateFlow()
@@ -48,15 +56,20 @@ open class FeedDetailViewModel(
 
     val post: StateFlow<PostDetailUiState> = postService.getPost().map { resource ->
         when (resource) {
-            is Resource.Loading -> PostDetailUiState(isLoading = true)
-            is Resource.Error -> PostDetailUiState(error = resource.exception.message)
+            is Resource.Loading -> PostDetailUiState(isLoading = true, isForum = isForum)
+            is Resource.Error -> PostDetailUiState(error = resource.exception.message, isForum = isForum)
             is Resource.Success -> {
                 val newPost = resource.data.postItem
                 val sortedComments = sortComments(resource.data.comments)
-                PostDetailUiState(postItem = newPost, comments = sortedComments, isLoading = resource.isLoading)
+                PostDetailUiState(
+                    postItem = newPost,
+                    comments = sortedComments,
+                    isLoading = resource.isLoading,
+                    isForum = isForum,
+                )
             }
         }
-    }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.Eagerly, PostDetailUiState())
+    }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.Eagerly, PostDetailUiState(isForum = isForum))
 
     fun sortComments(allComments: List<PostComment>, newestFirst: Boolean = true): List<PostComment> {
         val topLevelComments = allComments.filter { it.parentCommentId == null }
@@ -106,7 +119,7 @@ open class FeedDetailViewModel(
                 _postingCommentState.update {
                     PostCommentUiState(true)
                 }
-                postService.createComment(
+                val comment = postService.createComment(
                     artistId = artistId,
                     postId = postId,
                     content = content,
@@ -114,6 +127,7 @@ open class FeedDetailViewModel(
                 _postingCommentState.update {
                     PostCommentUiState(false)
                 }
+                snackbar("Comment posted successfully!")
             } catch (e: Exception) {
                 _postingCommentState.update {
                     PostCommentUiState(false, e.message)
@@ -128,10 +142,13 @@ open class FeedDetailViewModel(
                 _postingCommentState.update {
                     PostCommentUiState(true)
                 }
-                postService.postCommentReply(artistId, postId, parentCommentId, content)
+                val newComment = postService.postCommentReply(artistId, postId, parentCommentId, content)
+
+                newComment.commentId
                 _postingCommentState.update {
                     PostCommentUiState(false)
                 }
+                snackbar("Reply posted successfully!")
             } catch (e: Exception) {
                 _postingCommentState.update {
                     PostCommentUiState(false, e.message)
@@ -191,10 +208,6 @@ open class FeedDetailViewModel(
         }
     }
 
-    fun clearEditingPost() {
-        _editingPost.value = null
-    }
-
     fun showCreatePostDialog() {
         _showCreatePostDialog.value = true
     }
@@ -204,28 +217,32 @@ open class FeedDetailViewModel(
         _editingPost.value = null
     }
 
+    private fun editPost(postId: String) {
+        val post = postService.getPostFromCache(postId)
+        if (post != null) {
+            _editingPost.value = post
+            showCreatePostDialog()
+        } else {
+            snackbar("Could not edit post!")
+            Logger.w("Post not found in cache: $postId")
+        }
+    }
+
+    private fun snackbar(message: String) = viewModelScope.launch {
+        _uiEvent.emit(UiEvent.ShowSnackbar(message))
+    }
+
+
     fun handleIntent(intent: PostIntent) {
         when (intent) {
-            is PostIntent.CommentOnPost -> onComment(content = intent.content)
+            is PostIntent.ReplyToPost -> onComment(content = intent.content)
             is PostIntent.ReportComment, is PostIntent.ReportPost -> onReport(intent)
             is PostIntent.LikePost -> onLikeClicked()
             is PostIntent.ReplyToComment -> onReply(parentCommentId = intent.commentId, content = intent.content)
             is PostIntent.RetryLoad -> viewModelScope.launch { postService.loadPost() }
             is PostIntent.LikeComment -> onLikeCommentClicked(intent.commentId)
-            is PostIntent.ErrorOccurred -> {
-
-            }
-
-            is PostIntent.EditPost -> {
-                val post = postService.getPostFromCache(intent.postId)
-                if (post != null) {
-                    _editingPost.value = post
-                    showCreatePostDialog()
-                } else {
-                    // Post not found in cache, could emit an error or try to fetch it
-                    Logger.w("Post not found in cache: ${intent.postId}")
-                }
-            }
+            is PostIntent.ErrorOccurred -> snackbar(intent.message)
+            is PostIntent.EditPost -> editPost(intent.postId)
         }
     }
 }

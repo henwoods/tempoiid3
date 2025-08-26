@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.oiid.core.designsystem.diagonalCornerShape
 import oiid.core.base.designsystem.theme.OiidTheme
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.base.designsystem.theme.OiidTheme.typography
@@ -65,7 +66,7 @@ fun AuthTextButton(
     TextButton(
         modifier = modifier.padding(horizontal = OiidTheme.spacing.sm),
         colors = ButtonDefaults.textButtonColors().copy(
-            contentColor = colorScheme.onPrimary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
         ),
         onClick = {
             if (enabled) {

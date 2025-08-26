@@ -30,6 +30,7 @@ fun ArtistAppBar(
     destination: TopLevelDestination?,
     destinationInfo: Destinations,
     appState: AppState,
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier.fillMaxSize()) {
         if (destination != null) {

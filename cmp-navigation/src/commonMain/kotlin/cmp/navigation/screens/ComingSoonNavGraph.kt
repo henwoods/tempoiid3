@@ -14,7 +14,6 @@ fun NavController.navigateToComingSoon(route: String, navOptions: NavOptions? = 
 fun NavGraphBuilder.comingSoonScreen() {
     val routes = listOf(
         NavigationRoutes.Merch.NavigationRoute.route,
-        NavigationRoutes.Fanzone.NavigationRoute.route,
         NavigationRoutes.Library.NavigationRoute.route,
     )
 
