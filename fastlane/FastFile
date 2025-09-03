@@ -200,6 +200,7 @@ platform :android do
       commit_count = `git rev-list --count HEAD`.to_i
       ENV['VERSION_CODE'] = (commit_count << 1).to_s
     else
+      UI.user_error!("Unsupported platform: #{platform}. Supported platforms are: playstore, git")
     end
 
     # Output the results
