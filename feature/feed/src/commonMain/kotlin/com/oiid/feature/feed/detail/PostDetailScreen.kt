@@ -20,6 +20,7 @@ fun PostDetailScreen(
 ) {
     val postCommentState = viewModel.postingCommentState.collectAsState()
     val post = viewModel.post.collectAsState(PostDetailUiState(isForum = isForum))
+    val currentUserProfile = viewModel.currentUserProfile.collectAsState()
 
     UiEventHandler(viewModel.uiEvent)
 
@@ -27,6 +28,7 @@ fun PostDetailScreen(
         modifier = modifier,
         networkStatus = postCommentState.value,
         postUiState = post.value,
+        currentUserProfile = currentUserProfile.value,
         title = "Post",
         onHandleIntent = { viewModel.handleIntent(it) },
         onBackClick = onBackClick,

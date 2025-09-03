@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.oiid.core.designsystem.composable.InfoTextPanel
+import com.oiid.core.model.Profile
 import oiid.core.base.designsystem.component.OiidTopAppBar
 import oiid.core.base.designsystem.core.OiidTopAppBarConfiguration
 import oiid.core.base.designsystem.core.TopAppBarVariant
@@ -30,6 +31,7 @@ fun PostDetailScreenContent(
     modifier: Modifier = Modifier,
     networkStatus: PostCommentUiState,
     postUiState: PostDetailUiState,
+    currentUserProfile: Profile?,
     title: String,
     onHandleIntent: (PostIntent) -> Unit,
     onBackClick: () -> Unit,
@@ -55,6 +57,7 @@ fun PostDetailScreenContent(
                         post = postItem,
                         isForum = isForum,
                         comments = postUiState.comments,
+                        currentUserProfile = currentUserProfile,
                         isLoading = postUiState.isLoading,
                         isPostingComment = networkStatus.isLoading,
                         onHandleIntent = onHandleIntent,

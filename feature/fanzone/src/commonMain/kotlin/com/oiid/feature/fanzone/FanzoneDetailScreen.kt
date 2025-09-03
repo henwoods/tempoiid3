@@ -26,6 +26,7 @@ fun FanzoneDetailScreen(
 ) {
     val postCommentState = viewModel.postingCommentState.collectAsState()
     val postUiState = viewModel.post.collectAsState(PostDetailUiState(isForum = true))
+    val currentUserProfile = viewModel.currentUserProfile.collectAsState()
     val editingPost = viewModel.editingPost.collectAsState()
     val showCreatePostDialog = viewModel.showCreatePostDialog.collectAsState()
 
@@ -33,6 +34,7 @@ fun FanzoneDetailScreen(
         modifier = modifier.background(colorScheme.background),
         networkStatus = if (!showCreatePostDialog.value) postCommentState.value else PostCommentUiState(),
         postUiState = postUiState.value,
+        currentUserProfile = currentUserProfile.value,
         title = "Fan-zone",
         onHandleIntent = viewModel::handleIntent,
         onBackClick = onBackClick,

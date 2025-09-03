@@ -3,9 +3,11 @@ package com.oiid.feature.feed.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.oiid.core.data.profile.ProfileService
 import com.oiid.core.datastore.PostService
 import com.oiid.core.model.PostComment
 import com.oiid.core.model.PostItem
+import com.oiid.core.model.Profile
 import com.oiid.core.model.api.Resource
 import com.oiid.core.model.ui.UiEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -39,6 +41,7 @@ open class FeedPostDetailViewModel(
     private val postId: String,
     private val artistId: String,
     private val postService: PostService,
+    private val profileService: ProfileService,
     private val isForum: Boolean = false,
 ) : ViewModel(), KoinComponent {
 
@@ -53,6 +56,13 @@ open class FeedPostDetailViewModel(
 
     private val _showCreatePostDialog = MutableStateFlow(false)
     val showCreatePostDialog: StateFlow<Boolean> = _showCreatePostDialog.asStateFlow()
+
+    val currentUserProfile: StateFlow<Profile?> = profileService.getCurrentUserProfile().map { resource ->
+        when (resource) {
+            is Resource.Success -> resource.data
+            else -> null
+        }
+    }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     val post: StateFlow<PostDetailUiState> = postService.getPost().map { resource ->
         when (resource) {

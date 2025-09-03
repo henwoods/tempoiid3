@@ -26,6 +26,7 @@ import com.oiid.core.designsystem.composable.LinearProgress
 import com.oiid.core.designsystem.ext.bottomNavPadding
 import com.oiid.core.model.PostComment
 import com.oiid.core.model.PostItem
+import com.oiid.core.model.Profile
 import com.oiid.feature.feed.comment.CommentInputField
 import com.oiid.feature.feed.comment.CommentItem
 import com.oiid.feature.feed.list.FeedListItemUiState
@@ -41,6 +42,7 @@ fun PostDetailList(
     modifier: Modifier = Modifier,
     post: PostItem,
     comments: List<PostComment>,
+    currentUserProfile: Profile?,
     isForum: Boolean,
     isLoading: Boolean = false,
     isPostingComment: Boolean = false,
@@ -121,7 +123,8 @@ fun PostDetailList(
                     },
                     focusRequester = focusRequester,
                     label = if (parentComment != null) replyingName else "Add a comment",
-                    userAvatarImageUrl = post.profileImage,
+                    userAvatarImageUrl = currentUserProfile?.profileImage,
+                    userName = currentUserProfile?.name,
                     enabled = !isLoading && !isPostingComment,
                     isLoading = isPostingComment,
                     onCancel = {
@@ -178,7 +181,8 @@ fun PostDetailList(
                         },
                         focusRequester = focusRequester,
                         label = if (parentComment != null) replyingName else "Post a reply",
-                        userAvatarImageUrl = post.profileImage,
+                        userAvatarImageUrl = currentUserProfile?.profileImage,
+                        userName = currentUserProfile?.name,
                         enabled = !isLoading && !isPostingComment,
                         isLoading = isPostingComment,
                         onCancel = {

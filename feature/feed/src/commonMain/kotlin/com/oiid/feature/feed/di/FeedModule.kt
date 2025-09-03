@@ -49,6 +49,7 @@ val FeedModule = module {
             postService = get<FeedPostServiceImpl>(clazz = FeedPostServiceImpl::class) {
                 parametersOf(postId)
             },
+            profileService = get(),
         )
     }
 }

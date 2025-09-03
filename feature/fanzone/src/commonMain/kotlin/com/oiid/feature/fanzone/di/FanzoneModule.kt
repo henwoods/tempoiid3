@@ -43,6 +43,7 @@ val FanzoneModule = module {
                 userPreferencesRepository = get(),
                 postId = postId,
             ),
+            profileService = get(),
         )
     }
 }
