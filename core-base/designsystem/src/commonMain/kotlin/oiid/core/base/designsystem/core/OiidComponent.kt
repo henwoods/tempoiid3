@@ -157,6 +157,7 @@ interface OiidShapes {
 
 @Stable
 interface OiidSpacing {
+    val xxs: Dp
     val xs: Dp
     val sm: Dp
     val md: Dp

@@ -156,6 +156,7 @@ fun PostDetailList(
             CommentItem(
                 modifier = Modifier.animateItem(),
                 comment = comment,
+                post = post,
                 onStartReplying = {
                     replyingToComment = comment
                     commentText = ""

@@ -20,6 +20,8 @@ import com.oiid.core.designsystem.composable.UserAvaterType
 import com.oiid.core.designsystem.diagonalCornerShape
 import com.oiid.feature.feed.FeedPostActionsPopup
 import com.oiid.feature.feed.UserPostActionsPopup
+import com.oiid.feature.feed.comment.CommentBadge
+import com.oiid.feature.feed.comment.getPostTagType
 import com.oiid.feature.player.video.VideoPlayer
 import oiid.core.base.designsystem.theme.OiidTheme
 import oiid.core.base.designsystem.theme.OiidTheme.spacing
@@ -39,6 +41,7 @@ fun FeedContent(
 
     Column {
         if (uiState.isForum) {
+            val postBadgeType = getPostTagType(post)
             FeedItemDetails(
                 avatar = {
                     UserAvatar(type = UserAvaterType.Tertiary, imageUrl = post.profileImage)
@@ -47,10 +50,15 @@ fun FeedContent(
                 name = post.name,
                 createdAt = formatRelativeTime(post.createdAt),
                 isForum = uiState.isForum,
+                badges = {
+                    if (postBadgeType != null) {
+                        CommentBadge(type = postBadgeType)
+                    }
+                },
                 actions = {
-                    if(post.isPostByUser){
+                    if (post.isPostByUser) {
                         UserPostActionsPopup(post.id, onHandleIntent)
-                    }else{
+                    } else {
                         FeedPostActionsPopup(post.id, onHandleIntent)
                     }
                 },

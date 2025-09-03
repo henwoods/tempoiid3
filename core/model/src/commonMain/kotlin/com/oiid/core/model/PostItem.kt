@@ -29,6 +29,7 @@ data class PostItem(
     val removed: Boolean = false,
     val name: String = "",
     val profileImage: String = "",
+    val isSuperfan: Boolean = false,
     val isBandAffiliate: Boolean = false,
 )
 
@@ -84,6 +85,7 @@ data class PostComment(
     val flagged: Boolean = false,
     val name: String = "",
     val isBandAffiliate: Boolean = false,
+    val isSuperfan: Boolean = false,
     val comments: List<PostComment> = emptyList(),
     val profileImage: String = "",
 )
@@ -107,7 +109,7 @@ data class ForumPostResponse(
     @SerialName("isPinned") val isPinned: Boolean,
     @SerialName("name") val name: String? = null,
     @SerialName("profileImage") val profileImage: String? = null,
-    @SerialName("isBandAffiliate") val isBandAffiliate: Boolean,
+    @SerialName("isBandAffiliate") val isBandAffiliate: Boolean = false,
 )
 
 @Serializable

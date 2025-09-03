@@ -51,7 +51,7 @@ val mezzoLightScheme = lightColorScheme(
     surfaceContainerHighest = surfaceContainerHighestMezzoLight,
 )
 
-val mezzoDarkScheme = lightColorScheme(
+val mezzoDarkScheme = darkColorScheme(
     primary = primaryMezzoDark,
     onPrimary = onPrimaryMezzoDark,
     primaryContainer = primaryContainerMezzoDark,

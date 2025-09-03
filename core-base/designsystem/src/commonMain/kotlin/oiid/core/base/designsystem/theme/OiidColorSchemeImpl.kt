@@ -169,6 +169,7 @@ data class OiidShapesImpl(
 
 @Immutable
 data class OiidpacingImpl(
+    override val xxs: Dp = 2.dp,
     override val xs: Dp = 4.dp,
     override val sm: Dp = 8.dp,
     override val md: Dp = 16.dp,
@@ -350,6 +351,7 @@ class OiidShapesBuilder {
 
 @ComponentDsl
 class OiidSpacingBuilder {
+    val xxs: Dp = 2.dp
     var xs: Dp = 4.dp
     var sm: Dp = 8.dp
     var md: Dp = 16.dp
@@ -358,6 +360,7 @@ class OiidSpacingBuilder {
     var xxl: Dp = 64.dp
 
     fun build(): OiidSpacing = OiidpacingImpl(
+        xxs = xxs,
         xs = xs,
         sm = sm,
         md = md,

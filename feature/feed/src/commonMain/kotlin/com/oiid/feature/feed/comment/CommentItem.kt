@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import com.oiid.core.designsystem.composable.UserAvatar
 import com.oiid.core.designsystem.composable.UserAvaterType
 import com.oiid.core.model.PostComment
+import com.oiid.core.model.PostItem
 import oiid.core.base.designsystem.theme.OiidTheme
 import oiid.core.ui.PostIntent
 
@@ -17,6 +18,7 @@ import oiid.core.ui.PostIntent
 fun CommentItem(
     modifier: Modifier = Modifier,
     comment: PostComment,
+    post: PostItem,
     onStartReplying: (PostComment) -> Unit,
     onHandleIntent: (PostIntent) -> Unit,
 ) {
@@ -30,6 +32,7 @@ fun CommentItem(
             Column(verticalArrangement = Arrangement.spacedBy(OiidTheme.spacing.xs)) {
                 CommentContent(
                     comment = comment,
+                    post = post,
                     onStartReplying = onStartReplying,
                     onHandleIntent = onHandleIntent,
                 )
