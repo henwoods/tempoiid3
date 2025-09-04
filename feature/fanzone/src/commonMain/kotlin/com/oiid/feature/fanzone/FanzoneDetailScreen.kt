@@ -20,6 +20,7 @@ fun FanzoneDetailScreen(
     postId: String,
     artistId: String,
     onBackClick: () -> Unit,
+    onNavigateToEditProfile: () -> Unit,
     viewModel: FanzonePostPostDetailViewModel = koinViewModel(key = "${artistId}_$postId") {
         parametersOf(postId, artistId)
     },
@@ -38,6 +39,7 @@ fun FanzoneDetailScreen(
         title = "Fan-zone",
         onHandleIntent = viewModel::handleIntent,
         onBackClick = onBackClick,
+        onNavigateToEditProfile = onNavigateToEditProfile,
     )
 
     FanzoneEditPostBottomSheet(

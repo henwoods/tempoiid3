@@ -41,8 +41,12 @@ import oiid.core.base.designsystem.AppStateViewModel
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.base.designsystem.theme.OiidTheme.spacing
 import oiid.core.base.designsystem.theme.OiidTheme.typography
+import oiid.core.ui.ConfirmationDialogs
 import oiid.core.ui.FeedIntent
 import oiid.core.ui.appBarHeight
+import oiid.core.ui.getDialogContent
+import oiid.core.ui.needsConfirmation
+import oiid.core.ui.rememberConfirmationDialogHandler
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -60,12 +64,18 @@ fun BaseFeedScreen(
     setHasNavigated: (Boolean) -> Unit,
     appStateViewModel: AppStateViewModel = koinViewModel(),
 ) {
+    val confirmationDialogState = rememberConfirmationDialogHandler(
+        onHandleIntent = onHandleIntent,
+        needsConfirmation = { it.needsConfirmation() },
+        getDialogContent = { it.getDialogContent() },
+    )
+
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(selectedItem?.item?.id) {
         selectedItem?.let { selected ->
             if (!selected.hasNavigated) {
-                onHandleIntent(FeedIntent.ItemSelected(selected.item))
+                confirmationDialogState.handleIntent(FeedIntent.ItemSelected(selected.item))
                 onPostClicked(selected.item.id)
                 setHasNavigated(true)
             }
@@ -82,7 +92,7 @@ fun BaseFeedScreen(
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
                 if (selectedItem != null) {
-                    onHandleIntent(FeedIntent.ItemSelected(null))
+                    confirmationDialogState.handleIntent(FeedIntent.ItemSelected(null))
                 }
             }
         }
@@ -131,7 +141,7 @@ fun BaseFeedScreen(
                                             buttons = {
                                                 Button(
                                                     onClick = {
-                                                        onHandleIntent(FeedIntent.RetryLoad)
+                                                        confirmationDialogState.handleIntent(FeedIntent.RetryLoad)
                                                     },
                                                     colors = ButtonDefaults.textButtonColors().copy(
                                                         containerColor = colorScheme.surfaceVariant,
@@ -155,7 +165,7 @@ fun BaseFeedScreen(
                                 FeedList(
                                     modifier = Modifier.background(backgroundColor),
                                     uiState = uiState,
-                                    onHandleIntent = onHandleIntent,
+                                    onHandleIntent = confirmationDialogState::handleIntent,
                                     divider = divider,
                                     sharedTransitionScope = this@SharedTransitionLayout,
                                     animatedVisibilityScope = this@AnimatedContent,
@@ -176,12 +186,14 @@ fun BaseFeedScreen(
                                 isForum = uiState.isForum,
                                 isDetail = false,
                             ),
-                            onHandleIntent = onHandleIntent,
+                            onHandleIntent = confirmationDialogState::handleIntent,
                         )
                     }
                 }
             }
         }
-
     }
+
+    ConfirmationDialogs(confirmationDialogState)
 }
+

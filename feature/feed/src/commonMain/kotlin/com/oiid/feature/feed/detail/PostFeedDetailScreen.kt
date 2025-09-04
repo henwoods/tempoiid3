@@ -22,8 +22,14 @@ import oiid.core.base.designsystem.component.OiidTopAppBar
 import oiid.core.base.designsystem.core.OiidTopAppBarConfiguration
 import oiid.core.base.designsystem.core.TopAppBarVariant
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
+import oiid.core.ui.ConfirmationDialogs
 import oiid.core.ui.PostIntent
 import oiid.core.ui.appBarHeight
+import oiid.core.ui.getDialogContent
+import oiid.core.ui.getValidationDialogContent
+import oiid.core.ui.needsConfirmation
+import oiid.core.ui.needsNameValidation
+import oiid.core.ui.rememberConfirmationDialogHandler
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +41,21 @@ fun PostDetailScreenContent(
     title: String,
     onHandleIntent: (PostIntent) -> Unit,
     onBackClick: () -> Unit,
+    onNavigateToEditProfile: () -> Unit,
 ) {
+    val confirmationDialogState = rememberConfirmationDialogHandler(
+        onHandleIntent = onHandleIntent,
+        needsConfirmation = { it.needsConfirmation() },
+        getDialogContent = { it.getDialogContent() },
+        needsValidation = { intent ->
+            intent.needsNameValidation() && currentUserProfile?.name.isNullOrBlank()
+        },
+        getValidationDialogContent = { it.getValidationDialogContent() },
+        onValidationConfirm = { _ ->
+            onNavigateToEditProfile()
+        },
+    )
+
     val isForum = postUiState.isForum
     val topPaddingValues = PaddingValues(top = if (isForum) appBarHeight() else 0.dp)
 
@@ -49,7 +69,7 @@ fun PostDetailScreenContent(
             } else {
                 Box {
                     if (networkStatus.isLoading) {
-                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(topPaddingValues),)
+                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth().padding(topPaddingValues))
                     }
 
                     PostDetailList(
@@ -60,7 +80,7 @@ fun PostDetailScreenContent(
                         currentUserProfile = currentUserProfile,
                         isLoading = postUiState.isLoading,
                         isPostingComment = networkStatus.isLoading,
-                        onHandleIntent = onHandleIntent,
+                        onHandleIntent = confirmationDialogState::handleIntent,
                     )
 
                     OiidTopAppBar(
@@ -78,4 +98,5 @@ fun PostDetailScreenContent(
         }
     }
 
+    ConfirmationDialogs(confirmationDialogState)
 }

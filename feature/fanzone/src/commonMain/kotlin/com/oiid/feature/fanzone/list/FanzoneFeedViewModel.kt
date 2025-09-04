@@ -3,7 +3,9 @@ package com.oiid.feature.fanzone.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.oiid.core.data.profile.ProfileRepository
 import com.oiid.core.model.PostItem
+import com.oiid.core.model.Profile
 import com.oiid.core.model.api.Resource
 import com.oiid.core.model.ui.UiEvent
 import com.oiid.feature.fanzone.data.impl.FanzoneServiceImpl
@@ -13,19 +15,22 @@ import com.oiid.feature.feed.list.NavToPost
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import oiid.core.base.datastore.exceptions.InvalidKeyException
 import oiid.core.ui.FeedIntent
 
-class FanzoneFeedViewModel(private val fanzoneService: FanzoneServiceImpl) : ViewModel() {
+class FanzoneFeedViewModel(
+    private val fanzoneService: FanzoneServiceImpl,
+    private val profileRepository: ProfileRepository,
+) : ViewModel() {
     private val _selectedItem = MutableStateFlow<NavToPost?>(null)
     val selectedItem: StateFlow<NavToPost?> = _selectedItem.asStateFlow()
 
@@ -40,6 +45,11 @@ class FanzoneFeedViewModel(private val fanzoneService: FanzoneServiceImpl) : Vie
 
     private val _editingPost = MutableStateFlow<PostItem?>(null)
     val editingPost: StateFlow<PostItem?> = _editingPost.asStateFlow()
+    
+    private val _showMissingNameDialog = MutableStateFlow(false)
+    val showMissingNameDialog: StateFlow<Boolean> = _showMissingNameDialog.asStateFlow()
+    
+    val currentUserProfile: StateFlow<Profile?> = profileRepository.currentUserProfile
 
     val uiState: StateFlow<FeedUiState> = fanzoneService.getPosts().map { resource ->
         val showDialog = _showCreatePostDialog.value
@@ -82,12 +92,21 @@ class FanzoneFeedViewModel(private val fanzoneService: FanzoneServiceImpl) : Vie
     }
 
     fun showCreatePostDialog() {
-        _showCreatePostDialog.value = true
+        val profile = currentUserProfile.value
+        if (profile?.name.isNullOrBlank()) {
+            _showMissingNameDialog.value = true
+        } else {
+            _showCreatePostDialog.value = true
+        }
     }
 
     fun hideCreatePostDialog() {
         _showCreatePostDialog.value = false
         _editingPost.value = null
+    }
+    
+    fun hideMissingNameDialog() {
+        _showMissingNameDialog.value = false
     }
 
     private fun createPost(title: String, content: String) = viewModelScope.launch {

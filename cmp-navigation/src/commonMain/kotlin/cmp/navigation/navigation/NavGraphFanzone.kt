@@ -28,7 +28,7 @@ fun NavGraphBuilder.fanzoneScreen(
         enterTransition = { fadeIn(animationSpec = tween(300)) },
         exitTransition = { fadeOut(animationSpec = tween(300)) },
         popEnterTransition = { fadeIn(animationSpec = tween(300)) },
-        popExitTransition = { fadeOut(animationSpec = tween(300)) }
+        popExitTransition = { fadeOut(animationSpec = tween(300)) },
     ) {
         FanzoneScreen(
             modifier = modifier,
@@ -36,16 +36,21 @@ fun NavGraphBuilder.fanzoneScreen(
             onPostClicked = { postId ->
                 navController.navigateToForumPostDetail(postId, artistId())
             },
+            onNavigateToEditProfile = {
+                navController.navigateToProfile()
+            },
         )
     }
 
     composable(
         arguments = postDetailArguments,
         route = NavigationRoutes.Fanzone.Detail.route,
-        enterTransition = { slideInHorizontally(
-            initialOffsetX = { fullWidth -> fullWidth }
-        ) },
-        exitTransition = { slideOutHorizontally ( targetOffsetX = { fullWidth -> fullWidth }) },
+        enterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { fullWidth -> fullWidth },
+            )
+        },
+        exitTransition = { slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) },
     ) { backStackEntry ->
         val args = backStackEntry.toRoute<PostDetailArgs>()
 
@@ -54,6 +59,9 @@ fun NavGraphBuilder.fanzoneScreen(
             postId = args.postId,
             artistId = args.artistId,
             onBackClick = { navController.popBackStack() },
+            onNavigateToEditProfile = {
+                navController.navigateToProfile()
+            },
         )
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Confirmation Dialog Strings -->
+    <string name="dialog_report_post_title">Report post?</string>
+    <string name="dialog_report_post_message">Is this an inappropriate post?</string>
+    <string name="dialog_report_comment_title">Report comment?</string>
+    <string name="dialog_report_comment_message">Is this an inappropriate comment?</string>
+    <string name="dialog_report_confirm_button">Report it!</string>
+    <string name="dialog_report_dismiss_button">Nevermind!</string>
+    
+    <!-- Validation Dialog Strings -->
+    <string name="dialog_missing_profile_name_title">Missing Profile Name</string>
+    <string name="dialog_missing_profile_name_message">Hey there! To join a discussion, you need to set a name on your profile.</string>
+    <string name="dialog_missing_profile_name_confirm_button">On it!</string>
+    <string name="dialog_missing_profile_name_dismiss_button">Cancel</string>
+    
+    <!-- Generic Dialog Strings -->
+    <string name="dialog_generic_confirm_title">Confirm</string>
+    <string name="dialog_generic_confirm_message">Are you sure?</string>
+    <string name="dialog_generic_validation_title">Validation Failed</string>
+    <string name="dialog_generic_validation_message">Please fix the issue and try again.</string>
+    <string name="dialog_generic_confirm_button">Confirm</string>
+    <string name="dialog_generic_dismiss_button">Cancel</string>
+    <string name="dialog_generic_ok_button">OK</string>
+</resources>

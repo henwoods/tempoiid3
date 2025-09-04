@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oiid.core.designsystem.composable.InfoTextPanel
 import com.oiid.core.designsystem.composable.LinearProgress
-import com.oiid.core.designsystem.composable.OiidTextButton
+import com.oiid.core.designsystem.composable.OiidButton
 import oiid.core.ui.UiEventHandler
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -61,7 +61,7 @@ fun EventsScreen(
                         InfoTextPanel(
                             message = error,
                             buttons = {
-                                OiidTextButton(
+                                OiidButton(
                                     text = "Retry",
                                     onClick = { eventsViewModel.handleIntent(EventsIntent.RetryLoad) },
                                 )

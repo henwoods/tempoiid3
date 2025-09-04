@@ -2,12 +2,11 @@ package com.oiid.feature.feed.comment
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
+import com.oiid.core.designsystem.composable.CircularProgress
 
 @Composable
 fun SendCommentButton(enabled: Boolean, isLoading: Boolean = false, onSendClick: () -> Unit) {
@@ -17,9 +16,7 @@ fun SendCommentButton(enabled: Boolean, isLoading: Boolean = false, onSendClick:
         enabled = enabled && !isLoading,
     ) {
         if (isLoading) {
-            CircularProgressIndicator(
-                strokeWidth = 2.dp,
-            )
+            CircularProgress()
         } else {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.Send,

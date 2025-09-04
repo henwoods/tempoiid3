@@ -29,7 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.oiid.core.designsystem.composable.LinearProgress
-import com.oiid.core.designsystem.composable.OiidEventButton
+import com.oiid.core.designsystem.composable.OiidButton
 import com.oiid.core.designsystem.composable.OiidHeader
 import com.oiid.core.designsystem.composable.OiidIconButton
 import com.oiid.core.model.PostItem
@@ -128,9 +128,9 @@ private fun CreatePostBottomSheetContent(
                 Text(text = "Cancel", color = colorScheme.onPrimary)
             }
 
-            OiidEventButton(
+            OiidButton(
                 text = if (editingPost != null) "Update" else "Post",
-                isEnabled = isValid,
+                enabled = isValid,
                 onClick = {
                     if (isValid) {
                         onHandleIntent(FeedIntent.SavePost(title.trim(), content.trim()))

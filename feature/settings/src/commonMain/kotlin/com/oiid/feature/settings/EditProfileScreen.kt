@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.LocalPlatformContext
 import coil3.compose.SubcomposeAsyncImage
 import com.oiid.core.designsystem.composable.LinearProgress
-import com.oiid.core.designsystem.composable.OiidTextButton
+import com.oiid.core.designsystem.composable.OiidButton
 import com.oiid.core.designsystem.composable.UnderlineTextField
 import com.oiid.core.designsystem.composable.UserAvatar
 import com.oiid.core.designsystem.composable.UserAvaterType
@@ -142,15 +142,15 @@ internal fun EditingProfileScreen(
             modifier = Modifier.fillMaxWidth().padding(OiidTheme.spacing.md).align(Alignment.TopEnd),
             horizontalArrangement = Arrangement.spacedBy(OiidTheme.spacing.md, Alignment.End),
         ) {
-            OiidTextButton(
+            OiidButton(
+                text = "Cancel",
                 enabled = !editProfileState.isLoading,
                 onClick = { onCancelEditing() },
-                text = "Cancel",
             )
-            OiidTextButton(
+            OiidButton(
+                text = "Done",
                 enabled = !editProfileState.isLoading,
                 onClick = { onSaveProfileChanges() },
-                text = "Done",
             )
         }
 

@@ -98,11 +98,11 @@ fun OiidIconButton(
 }
 
 @Composable
-fun OiidEventButton(modifier: Modifier = Modifier, text: String, isEnabled: Boolean, onClick: () -> Unit) {
+fun OiidButton(modifier: Modifier = Modifier, text: String, enabled: Boolean = true, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = modifier,
-        enabled = isEnabled,
+        enabled = enabled,
         shape = RoundedCornerShape(size = OiidTheme.spacing.sm),
     ) {
         Text(
@@ -111,5 +111,18 @@ fun OiidEventButton(modifier: Modifier = Modifier, text: String, isEnabled: Bool
                 fontWeight = FontWeight.Bold,
             ),
         )
+    }
+}
+
+@Composable
+fun OiidTextButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+    textColor: Color =  Color.Unspecified
+) {
+    TextButton(modifier = modifier, enabled = enabled, onClick = onClick) {
+        Text(text = text, color = textColor)
     }
 }

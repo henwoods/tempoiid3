@@ -31,7 +31,7 @@ fun NavGraphBuilder.feedGraph(
             enterTransition = { fadeIn(animationSpec = tween(300)) },
             exitTransition = { fadeOut(animationSpec = tween(300)) },
             popEnterTransition = { fadeIn(animationSpec = tween(300)) },
-            popExitTransition = { fadeOut(animationSpec = tween(300)) }
+            popExitTransition = { fadeOut(animationSpec = tween(300)) },
         ) {
             HomeFeedScreen(
                 modifier = modifier,
@@ -54,6 +54,9 @@ fun NavGraphBuilder.feedGraph(
                 artistId = args.artistId,
                 isForum = true,
                 onBackClick = { navController.popBackStack() },
+                onNavigateToEditProfile = {
+                    navController.navigateToProfile()
+                },
             )
         }
     }

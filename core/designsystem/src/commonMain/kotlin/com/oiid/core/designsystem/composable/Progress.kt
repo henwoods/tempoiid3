@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,30 +29,36 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import oiid.core.base.designsystem.theme.OiidTheme
+import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
+import oiid.core.base.designsystem.theme.OiidTheme.spacing
+
+enum class CircularProgressSize {
+    Icon, Screen
+}
 
 @Composable
-fun CircularProgress() {
-    Box(
-        modifier = Modifier.padding(vertical = OiidTheme.spacing.md).fillMaxWidth(),
-        contentAlignment = Alignment.Center,
-    ) {
-        CircularProgressIndicator()
+fun CircularProgress(modifier: Modifier = Modifier, size: CircularProgressSize = CircularProgressSize.Icon, color: Color = colorScheme.primary) {
+    val sizeDp = when (size) {
+        CircularProgressSize.Icon -> 24.dp
+        CircularProgressSize.Screen -> 48.dp
     }
+
+    CircularProgressIndicator(modifier = modifier.size(sizeDp), color = color)
 }
 
 @Composable
 fun LinearProgress(modifier: Modifier = Modifier) {
     LinearProgressIndicator(
         modifier = modifier.fillMaxWidth(),
-        color = OiidTheme.colorScheme.primary,
-        trackColor = OiidTheme.colorScheme.background,
+        color = colorScheme.primary,
+        trackColor = colorScheme.background,
     )
 }
 
 @Composable
 fun FeedProgress(text: String) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(OiidTheme.spacing.md),
+        verticalArrangement = Arrangement.spacedBy(spacing.md),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(

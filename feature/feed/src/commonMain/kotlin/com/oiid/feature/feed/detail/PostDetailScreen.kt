@@ -14,6 +14,7 @@ fun PostDetailScreen(
     artistId: String,
     isForum: Boolean,
     onBackClick: () -> Unit,
+    onNavigateToEditProfile: () -> Unit,
     viewModel: FeedPostDetailViewModel = koinViewModel(key = "${artistId}_$postId") {
         parametersOf(postId, artistId)
     },
@@ -32,6 +33,7 @@ fun PostDetailScreen(
         title = "Post",
         onHandleIntent = { viewModel.handleIntent(it) },
         onBackClick = onBackClick,
+        onNavigateToEditProfile = onNavigateToEditProfile,
     )
 }
 

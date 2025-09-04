@@ -10,6 +10,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.oiid.core.designsystem.composable.ConfirmationDialog
 import com.oiid.feature.fanzone.composables.FanzoneEditPostBottomSheet
 import com.oiid.feature.fanzone.list.FanzoneFeedViewModel
 import com.oiid.feature.feed.BaseFeedScreen
@@ -24,6 +25,7 @@ fun FanzoneScreen(
     modifier: Modifier,
     viewModel: FanzoneFeedViewModel = koinViewModel(),
     onPostClicked: (String) -> Unit,
+    onNavigateToEditProfile: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val selectedItem by viewModel.selectedItem.collectAsStateWithLifecycle()
@@ -31,6 +33,7 @@ fun FanzoneScreen(
     val isPostingComment = viewModel.postingCommentState.collectAsState().value.isLoading
     val createPostModal = viewModel.showCreatePostDialog.collectAsState(false)
     val editingPost by viewModel.editingPost.collectAsStateWithLifecycle()
+    val showMissingNameDialog by viewModel.showMissingNameDialog.collectAsStateWithLifecycle()
 
     UiEventHandler(uiEventFlow = viewModel.uiEvent)
 
@@ -60,5 +63,16 @@ fun FanzoneScreen(
         isLoading = isPostingComment,
         onDismiss = viewModel::hideCreatePostDialog,
         onHandleIntent = viewModel::handleIntent,
+    )
+    
+    ConfirmationDialog(
+        title = "Missing Profile Name",
+        message = "Hey there! To join a discussion, you need to set a name on your profile.",
+        confirmButtonText = "On it!",
+        onConfirm = {
+            onNavigateToEditProfile()
+        },
+        onDismiss = viewModel::hideMissingNameDialog,
+        isVisible = showMissingNameDialog,
     )
 }

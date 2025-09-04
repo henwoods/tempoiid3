@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.oiid.core.designsystem.composable.OiidBodyText
-import com.oiid.core.designsystem.composable.OiidEventButton
+import com.oiid.core.designsystem.composable.OiidButton
 import com.oiid.core.designsystem.composable.OiidIconButton
 import com.oiid.core.designsystem.composable.OiidTitleText
 import com.oiid.core.designsystem.composable.OiidTitleTextItalic
@@ -85,10 +85,10 @@ fun EventCard(
                 }
 
                 if (event.hasTicketLink) {
-                    OiidEventButton(
+                    OiidButton(
                         modifier = Modifier.fillMaxWidth(),
                         text = "BUY TICKET",
-                        isEnabled = !event.isInThePast,
+                        enabled = !event.isInThePast,
                         onClick = {
                             onAction(EventsIntent.TicketClicked(event.link))
                         },
