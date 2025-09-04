@@ -81,7 +81,7 @@ open class FeedPostDetailViewModel(
         }
     }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.Eagerly, PostDetailUiState(isForum = isForum))
 
-    fun sortComments(allComments: List<PostComment>, newestFirst: Boolean = true): List<PostComment> {
+    fun sortComments(allComments: List<PostComment>, newestFirst: Boolean = false): List<PostComment> {
         val topLevelComments = allComments.filter { it.parentCommentId == null }
         val replies = allComments.filter { it.parentCommentId != null }
 
