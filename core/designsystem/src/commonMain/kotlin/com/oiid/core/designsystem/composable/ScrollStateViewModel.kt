@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 open class ScrollStateViewModel : ViewModel() {
     var scrollIndex: Int = 0
     var scrollOffset: Int = 0
-    
+
     /**
      * Updates the scroll position
      */
@@ -17,7 +17,7 @@ open class ScrollStateViewModel : ViewModel() {
         scrollIndex = index
         scrollOffset = offset
     }
-    
+
     /**
      * Resets scroll position to top
      */

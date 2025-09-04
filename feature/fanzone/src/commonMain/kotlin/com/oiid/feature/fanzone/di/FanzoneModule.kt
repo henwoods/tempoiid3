@@ -31,6 +31,7 @@ val FanzoneModule = module {
     viewModel {
         FanzoneFeedViewModel(
             fanzoneService = get(),
+            profileService = get(),
         )
     }
 

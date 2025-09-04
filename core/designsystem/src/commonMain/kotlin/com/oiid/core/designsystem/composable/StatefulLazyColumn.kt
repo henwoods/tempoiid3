@@ -16,7 +16,7 @@ import oiid.core.base.designsystem.theme.OiidTheme.spacing
 /**
  * A reusable LazyColumn that automatically preserves scroll state
  * and applies standard app styling (background, spacing, padding).
- * 
+ *
  * @param modifier Modifier to be applied to the LazyColumn
  * @param scrollStateViewModel ViewModel that preserves scroll position
  * @param content The content to be displayed in the LazyColumn
@@ -47,6 +47,6 @@ fun StatefulLazyColumn(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(spacing.md),
         contentPadding = bottomNavPadding(contentPadding),
-        content = content
+        content = content,
     )
 }

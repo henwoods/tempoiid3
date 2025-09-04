@@ -31,10 +31,10 @@ import oiid.core.base.designsystem.theme.OiidTheme.spacing
 fun EventCardHeader(
     event: EventUiState,
 ) {
-    FlowRow (
+    FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
 
     ) {
         OiidTitleText(text = event.title)

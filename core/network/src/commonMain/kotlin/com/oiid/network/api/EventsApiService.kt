@@ -23,6 +23,6 @@ interface EventsApiService {
     @GET("app/artists/{artistId}/events/{eventId}")
     suspend fun getEventDetail(
         @Path("artistId") artistId: String,
-        @Path("eventId") eventId: String
+        @Path("eventId") eventId: String,
     ): EventDetail
 }

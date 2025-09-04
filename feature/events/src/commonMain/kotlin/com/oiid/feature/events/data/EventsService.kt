@@ -10,12 +10,12 @@ interface EventsService {
      * Gets the events for a specific artist as a Flow
      */
     fun getEvents(artistId: String): Flow<Resource<List<Event>>>
-    
+
     /**
      * Gets detailed information for a specific event
      */
     suspend fun getEventDetail(artistId: String, eventId: String): Resource<EventDetail>
-    
+
     /**
      * Loads/refreshes events data
      */

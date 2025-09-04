@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.oiid.core.designsystem.diagonalCornerShape
 import oiid.core.base.designsystem.theme.OiidTheme
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.base.designsystem.theme.OiidTheme.typography
@@ -97,7 +96,6 @@ fun OiidIconButton(
         )
     }
 }
-
 
 @Composable
 fun OiidEventButton(modifier: Modifier = Modifier, text: String, isEnabled: Boolean, onClick: () -> Unit) {

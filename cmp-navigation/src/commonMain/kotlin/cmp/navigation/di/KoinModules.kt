@@ -47,7 +47,7 @@ object KoinModules {
             AuthModule,
             ImagePickModule,
             FanzoneModule,
-            EventsModule
+            EventsModule,
         )
     }
 
@@ -57,6 +57,6 @@ object KoinModules {
         DatastoreModule,
         FeatureModule,
         AppModule,
-        SplashModule
+        SplashModule,
     )
 }

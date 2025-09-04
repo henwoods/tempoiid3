@@ -18,7 +18,7 @@ fun NavGraphBuilder.eventsScreen(
         enterTransition = { fadeIn(animationSpec = tween(300)) },
         exitTransition = { fadeOut(animationSpec = tween(300)) },
         popEnterTransition = { fadeIn(animationSpec = tween(300)) },
-        popExitTransition = { fadeOut(animationSpec = tween(300)) }
+        popExitTransition = { fadeOut(animationSpec = tween(300)) },
     ) {
         EventsScreen(
             modifier = modifier,

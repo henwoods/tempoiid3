@@ -44,7 +44,7 @@ abstract class FeedServiceImpl(
             val cachedItemsWithLikedStatus = cachedItems.map { feedItem ->
                 feedItem.copy(
                     isLikedByUser = likedPostIds.contains(feedItem.id),
-                    isPostByUser = feedItem.userId == currentUserId
+                    isPostByUser = feedItem.userId == currentUserId,
                 )
             }
 
@@ -60,7 +60,7 @@ abstract class FeedServiceImpl(
             val feedItemsWithLikedStatus = posts.map { feedItem ->
                 feedItem.copy(
                     isLikedByUser = likedPostIds.contains(feedItem.id),
-                    isPostByUser = feedItem.userId == currentUserId
+                    isPostByUser = feedItem.userId == currentUserId,
                 )
             }
 
@@ -152,7 +152,7 @@ abstract class FeedServiceImpl(
                 cachedPost?.let { post ->
                     val updatedPost = post.copy(
                         flagged = true,
-                        isPostByUser = post.isPostByUser
+                        isPostByUser = post.isPostByUser,
                     )
                     cache.put(postId, updatedPost)
                 }

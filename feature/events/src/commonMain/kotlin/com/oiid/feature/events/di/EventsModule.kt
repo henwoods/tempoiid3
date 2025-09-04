@@ -14,15 +14,15 @@ val EventsModule = module {
     single<EventsApiService> {
         get<Ktorfit>().createEventsApiService()
     }
-    
+
     single<EventsService> {
         EventsServiceImpl(get())
     }
-    
+
     viewModel {
         EventsViewModel(get())
     }
-    
+
     viewModel {
         EventsListViewModel()
     }

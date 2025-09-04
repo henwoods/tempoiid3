@@ -31,7 +31,7 @@ fun BottomBar(
             val hasUnread = destinationsWithUnreadResources.contains(destination)
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
 
-           OiidNavigationBarItem(
+            OiidNavigationBarItem(
                 selected = selected,
                 onClick = { onNavigateToDestination(destination) },
                 icon = {

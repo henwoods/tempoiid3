@@ -13,7 +13,7 @@ class PostCacheDelegate(
     private val postId: String,
     private val cacheKeyPrefix: String,
     private val commentCache: CacheManager<String, List<PostComment>> = LruCacheManager(),
-    private val tag: String = "PostCacheDelegate"
+    private val tag: String = "PostCacheDelegate",
 ) {
     private val cacheKey = "${cacheKeyPrefix}_$postId"
 

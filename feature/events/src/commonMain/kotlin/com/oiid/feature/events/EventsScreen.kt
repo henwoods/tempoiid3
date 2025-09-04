@@ -38,7 +38,7 @@ fun EventsScreen(
         }
     }
 
-    UiEventHandler(uiEventFlow = eventsViewModel.uiEvent,)
+    UiEventHandler(uiEventFlow = eventsViewModel.uiEvent)
 
     Scaffold(modifier = modifier) { paddingValues ->
         Column(Modifier.padding(paddingValues)) {

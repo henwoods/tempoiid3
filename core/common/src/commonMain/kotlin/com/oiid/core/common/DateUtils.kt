@@ -28,11 +28,15 @@ fun formatRelativeTime(pastMillis: Instant, nowMillis: Long = Clock.System.now()
         seconds < 60 -> "just now"
         minutes < 60 -> "$minutes minute${if (minutes != 1L) "s" else ""} ago"
         hours < 24 -> "$hours hour${if (hours != 1L) "s" else ""} ago"
-        months < 1 -> { // If less than a month but more than 7 days, consider showing weeks
+        months < 1 -> {
             val weeks = days / 7
-            if (weeks > 0) "$weeks week${if (weeks != 1L) "s" else ""} ago"
-            else "$days day${if (days != 1L) "s" else ""} ago" // Fallback if less than a week
+            if (weeks > 0) {
+                "$weeks week${if (weeks != 1L) "s" else ""} ago"
+            } else {
+                "$days day${if (days != 1L) "s" else ""} ago"
+            }
         }
+
         months < 12 -> "$months month${if (months != 1L) "s" else ""} ago"
         else -> "$years year${if (years != 1L) "s" else ""} ago"
     }
