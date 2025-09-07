@@ -22,6 +22,7 @@ import com.oiid.core.designsystem.composable.OiidHeader
 import com.oiid.core.oiidPainterResource
 import com.oiid.feature.feed.ProfileIconButton
 import oiid.core.base.designsystem.theme.OiidTheme.spacing
+import oiid.core.base.designsystem.theme.ThemedStatusBar
 
 @Composable
 fun ArtistAppBar(
@@ -71,6 +72,8 @@ fun AppBar(
     destination: TopLevelDestination?,
     modifier: Modifier = Modifier,
 ) {
+    ThemedStatusBar(Color.Transparent)
+
     CenterAlignedTopAppBar(
         title = {
             title()

@@ -10,6 +10,8 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import cmp.navigation.navigation.NavigationRoutes.Companion.LOGIN_CONFIRMED
+import com.oiid.core.config.oiidTheme
+import com.oiid.core.designsystem.theme.OiidTheme
 import com.oiid.core.model.nav.ConfirmationStateArgs
 import com.oiid.feature.auth.AuthScreen
 import com.oiid.feature.auth.SignInScreen
@@ -27,14 +29,16 @@ fun NavGraphBuilder.unauthenticatedGraph(navController: NavController) {
             popEnterTransition = { EnterTransition.None },
             popExitTransition = { ExitTransition.None },
         ) {
-            AuthScreen(
-                onNavigateToRegistration = {
-                    navController.navigate(route = NavigationRoutes.Unauthenticated.Registration.route)
-                },
-                onNavigateToSignIn = {
-                    navController.navigate(route = NavigationRoutes.Unauthenticated.SignIn.route)
-                },
-            )
+            OiidTheme(oiidColorScheme = oiidTheme(), true) {
+                AuthScreen(
+                    onNavigateToRegistration = {
+                        navController.navigate(route = NavigationRoutes.Unauthenticated.Registration.route)
+                    },
+                    onNavigateToSignIn = {
+                        navController.navigate(route = NavigationRoutes.Unauthenticated.SignIn.route)
+                    },
+                )
+            }
         }
 
         composable(
@@ -47,24 +51,27 @@ fun NavGraphBuilder.unauthenticatedGraph(navController: NavController) {
             ),
         ) { backStackEntry ->
             val args = backStackEntry.toRoute<ConfirmationStateArgs>()
-
-            SignInScreen(
-                onBackClick = navController::navigateUp,
-                confirmationState = args,
-            )
+            OiidTheme(oiidColorScheme = oiidTheme(), true) {
+                SignInScreen(
+                    onBackClick = navController::navigateUp,
+                    confirmationState = args,
+                )
+            }
         }
 
         composable(route = NavigationRoutes.Unauthenticated.Registration.route) {
-            SignUpScreen(
-                onBackClick = navController::navigateUp,
-                onConfirmedLogin = {
-                    navController.navigate(route = NavigationRoutes.Unauthenticated.SignIn.createRoute(true)) {
-                        popUpTo(route = NavigationRoutes.Unauthenticated.NavigationRoute.route) {
-                            inclusive = true
+            OiidTheme(oiidColorScheme = oiidTheme(), true) {
+                SignUpScreen(
+                    onBackClick = navController::navigateUp,
+                    onConfirmedLogin = {
+                        navController.navigate(route = NavigationRoutes.Unauthenticated.SignIn.createRoute(true)) {
+                            popUpTo(route = NavigationRoutes.Unauthenticated.NavigationRoute.route) {
+                                inclusive = true
+                            }
                         }
-                    }
-                },
-            )
+                    },
+                )
+            }
         }
     }
 }

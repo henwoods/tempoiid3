@@ -38,13 +38,6 @@ class MainActivity : ComponentActivity() {
         FileKit.init(this)
 
         setContent {
-            SystemBarsEffect()
-//            val status = viewModel.networkStatus.collectAsStateWithLifecycle().value
-//
-//            if (status) {
-//                appUpdateManager.checkForAppUpdate()
-//            }
-
             SharedApp()
         }
     }
@@ -52,23 +45,5 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         appUpdateManager.checkForResumeUpdateState()
-    }
-}
-
-@Composable
-fun SystemBarsEffect() {
-    val context = LocalContext.current
-    val isLight = isSystemInDarkTheme()
-    LaunchedEffect(isLight) {
-        val activity = context as? ComponentActivity ?: return@LaunchedEffect
-
-        activity.enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(
-                Color.Transparent.toArgb(),
-            ),
-            navigationBarStyle = SystemBarStyle.dark(
-                Color.Transparent.toArgb(),
-            ),
-        )
     }
 }

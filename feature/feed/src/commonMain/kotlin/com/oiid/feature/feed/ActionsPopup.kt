@@ -65,7 +65,6 @@ fun FeedPostActionsPopup(id: String, onHandleIntent: (FeedIntent) -> Unit) {
                 OPTION_KEY_REPORT -> {
                     onHandleIntent(FeedIntent.ReportPost(id))
                 }
-
             }
         },
     )

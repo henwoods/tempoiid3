@@ -53,6 +53,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.oiid.core.designsystem.icon.AppIcons
 import oiid.core.base.designsystem.theme.OiidTheme
+import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
+import oiid.core.base.designsystem.theme.OiidTheme.spacing
+import oiid.core.base.designsystem.theme.OiidTheme.typography
 
 @Composable
 fun AuthTextField(
@@ -85,7 +88,7 @@ fun AuthTextField(
             value = value,
             enabled = enabled,
             onValueChange = onValueChange,
-            textStyle = OiidTheme.typography.bodyLarge,
+            textStyle = typography.bodyLarge,
             visualTransformation = if (isPassword && !passwordVisible) {
                 PasswordVisualTransformation()
             } else {
@@ -95,12 +98,12 @@ fun AuthTextField(
                 {
                     focused = it.isFocused
                 },
-            ).fillMaxWidth().clip(RoundedCornerShape(OiidTheme.spacing.lg))
-                .background(OiidTheme.colorScheme.onSurface).border(
+            ).fillMaxWidth().clip(RoundedCornerShape(spacing.lg))
+                .background(colorScheme.onSurface).border(
                     1.dp,
-                    OiidTheme.colorScheme.onSurface.copy(alpha = 0.4f),
-                    RoundedCornerShape(OiidTheme.spacing.lg),
-                ).padding(horizontal = OiidTheme.spacing.lg, vertical = OiidTheme.spacing.md),
+                    colorScheme.onSurface.copy(alpha = 0.4f),
+                    RoundedCornerShape(spacing.lg),
+                ).padding(horizontal = spacing.lg, vertical = spacing.md),
             decorationBox = { innerTextField ->
                 VisibilityToggle(
                     isPassword = isPassword,
@@ -129,8 +132,8 @@ fun ColumnScope.TextPlaceholder(
             AnimatedVisibility(!isFocused && value.isEmpty(), enter = fadeIn(), exit = fadeOut()) {
                 Text(
                     text = label,
-                    style = OiidTheme.typography.bodyLarge,
-                    color = OiidTheme.colorScheme.surface,
+                    style = typography.bodyLarge,
+                    color = colorScheme.surface,
                 )
             }
         }
@@ -157,7 +160,7 @@ fun VisibilityToggle(
                 Icon(
                     imageVector = if (passwordVisible) AppIcons.Visibility else AppIcons.VisibilityOff,
                     contentDescription = if (passwordVisible) "Hide password" else "Show password",
-                    tint = OiidTheme.colorScheme.surface,
+                    tint = colorScheme.surface,
                 )
             }
         }
@@ -191,7 +194,7 @@ fun UnderlineTextField(
         null
     }
 
-    val underlineColor = MaterialTheme.colorScheme.onPrimary
+    val underlineColor = colorScheme.onBackground
     val innerModifier = if (focusRequester != null) {
         Modifier.focusRequester(focusRequester)
     } else {
@@ -218,10 +221,10 @@ fun UnderlineTextField(
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Color.Transparent,
                 disabledBorderColor = Color.Transparent,
-                focusedTextColor = OiidTheme.colorScheme.onPrimary,
-                unfocusedTextColor = OiidTheme.colorScheme.onPrimary,
-                focusedLabelColor = OiidTheme.colorScheme.onPrimaryContainer,
-                unfocusedLabelColor = OiidTheme.colorScheme.onPrimaryContainer,
+                focusedTextColor = colorScheme.onBackground,
+                unfocusedTextColor = colorScheme.onBackground,
+                focusedLabelColor = colorScheme.onBackground,
+                unfocusedLabelColor = colorScheme.onBackground,
             ),
             enabled = enabled,
             maxLines = maxLines,
@@ -238,13 +241,13 @@ fun UnderlineTextField(
                 modifier = Modifier.align(Alignment.TopEnd),
             ) {
                 TextButton(
-                    contentPadding = PaddingValues(horizontal = OiidTheme.spacing.sm, vertical = 0.dp),
+                    contentPadding = PaddingValues(horizontal = spacing.sm, vertical = 0.dp),
                     modifier = Modifier.height(12.dp),
                     content = {
                         Text(
                             "Cancel",
-                            style = OiidTheme.typography.labelMedium,
-                            color = OiidTheme.colorScheme.onPrimary,
+                            style = typography.labelMedium,
+                            color = colorScheme.onSurface,
                         )
                     },
                     onClick = {

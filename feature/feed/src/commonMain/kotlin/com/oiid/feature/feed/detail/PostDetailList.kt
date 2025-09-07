@@ -1,6 +1,5 @@
 package com.oiid.feature.feed.detail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +9,8 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Surface
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,7 +34,6 @@ import com.oiid.feature.feed.list.FeedListItemUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import oiid.core.base.designsystem.theme.OiidTheme
-import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.ui.PostIntent
 import oiid.core.ui.toFeedIntent
 
@@ -85,95 +85,37 @@ fun PostDetailList(
 
     val spaceBetweenComments = OiidTheme.spacing.sm
 
-    LazyColumn(
-        state = listState,
-        modifier = modifier.fillMaxSize().imePadding().background(colorScheme.background),
-        contentPadding = bottomNavPadding(),
-    ) {
-        item(key = "post-card") {
-            PostItemCard(
-                uiState = FeedListItemUiState(post, false, isForum, true),
-                onHandleIntent = {
-                    val mappedIntent = it.toFeedIntent()
-                    if (mappedIntent != null) {
-                        onHandleIntent(mappedIntent)
-                    }
-                },
-            )
-
-            if (!isLoading) {
-                Spacer(modifier = Modifier.height(spaceBetweenComments))
-            }
-        }
-
-        if (isLoading) {
-            item(key = "loading-indicator") {
-                LinearProgress()
-                Spacer(modifier = Modifier.height(spaceBetweenComments))
-            }
-        }
-
-        if (!isForum) {
-            item(key = "comment-input") {
-                CommentInputField(
-                    value = commentText,
-                    onValueChange = { commentText = it },
-                    onSendClick = {
-                        onHandleCommentSubmission()
-                    },
-                    focusRequester = focusRequester,
-                    label = if (parentComment != null) replyingName else "Add a comment",
-                    userAvatarImageUrl = currentUserProfile?.profileImage,
-                    userName = currentUserProfile?.name,
-                    enabled = !isLoading && !isPostingComment,
-                    isLoading = isPostingComment,
-                    onCancel = {
-                        onCancel()
+    Surface {
+        LazyColumn(
+            state = listState,
+            modifier = modifier.fillMaxSize().imePadding(),
+            contentPadding = bottomNavPadding(),
+        ) {
+            item(key = "post-card") {
+                PostItemCard(
+                    uiState = FeedListItemUiState(post, false, isForum, true),
+                    onHandleIntent = {
+                        val mappedIntent = it.toFeedIntent()
+                        if (mappedIntent != null) {
+                            onHandleIntent(mappedIntent)
+                        }
                     },
                 )
-                Spacer(modifier = Modifier.height(spaceBetweenComments))
-            }
-        }
 
-        itemsIndexed(items = comments, key = { index, comment -> comment.commentId }) { index, comment ->
-            if (index == 0) {
-                // Don't space above the first row
-            } else if (comment.parentCommentId == null) {
-                Spacer(modifier = Modifier.height(spaceBetweenComments))
-            } else {
                 if (!isLoading) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth().height(spaceBetweenComments),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        DashedVerticalDivider()
-                    }
-                } else {
                     Spacer(modifier = Modifier.height(spaceBetweenComments))
                 }
             }
 
-            CommentItem(
-                modifier = Modifier.animateItem(),
-                comment = comment,
-                post = post,
-                onStartReplying = {
-                    replyingToComment = comment
-                    commentText = ""
-                    coroutineScope.launch {
-                        kotlinx.coroutines.yield()
-                        listState.animateScrollToItem(if (isForum) comments.size else 1)
-                        focusRequester.requestFocus()
-                    }
-                },
-                onHandleIntent = onHandleIntent,
-            )
-        }
-
-        if (isForum) {
-            item(key = "comment-input") {
-                Column(Modifier.animateItem()) {
+            if (isLoading) {
+                item(key = "loading-indicator") {
+                    LinearProgress()
                     Spacer(modifier = Modifier.height(spaceBetweenComments))
+                }
+            }
+
+            if (!isForum) {
+                item(key = "comment-input") {
                     CommentInputField(
                         value = commentText,
                         onValueChange = { commentText = it },
@@ -181,16 +123,76 @@ fun PostDetailList(
                             onHandleCommentSubmission()
                         },
                         focusRequester = focusRequester,
-                        label = if (parentComment != null) replyingName else "Post a reply",
+                        label = if (parentComment != null) replyingName else "Add a comment",
                         userAvatarImageUrl = currentUserProfile?.profileImage,
                         userName = currentUserProfile?.name,
                         enabled = !isLoading && !isPostingComment,
                         isLoading = isPostingComment,
                         onCancel = {
-                            commentText = ""
-                            focusRequester.freeFocus()
+                            onCancel()
                         },
                     )
+                    Spacer(modifier = Modifier.height(spaceBetweenComments))
+                }
+            }
+
+            itemsIndexed(items = comments, key = { index, comment -> comment.commentId }) { index, comment ->
+                if (index == 0) {
+                    // Don't space above the first row
+                } else if (comment.parentCommentId == null) {
+                    Spacer(modifier = Modifier.height(spaceBetweenComments))
+                } else {
+                    if (!isLoading) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth().height(spaceBetweenComments),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            DashedVerticalDivider()
+                        }
+                    } else {
+                        Spacer(modifier = Modifier.height(spaceBetweenComments))
+                    }
+                }
+
+                CommentItem(
+                    modifier = Modifier.animateItem(),
+                    comment = comment,
+                    post = post,
+                    onStartReplying = {
+                        replyingToComment = comment
+                        commentText = ""
+                        coroutineScope.launch {
+                            kotlinx.coroutines.yield()
+                            listState.animateScrollToItem(if (isForum) comments.size else 1)
+                            focusRequester.requestFocus()
+                        }
+                    },
+                    onHandleIntent = onHandleIntent,
+                )
+            }
+
+            if (isForum) {
+                item(key = "comment-input") {
+                    Column(Modifier.animateItem()) {
+                        Spacer(modifier = Modifier.height(spaceBetweenComments))
+                        CommentInputField(
+                            value = commentText,
+                            onValueChange = { commentText = it },
+                            onSendClick = {
+                                onHandleCommentSubmission()
+                            },
+                            focusRequester = focusRequester,
+                            label = if (parentComment != null) replyingName else "Post a reply",
+                            userAvatarImageUrl = currentUserProfile?.profileImage,
+                            userName = currentUserProfile?.name,
+                            enabled = !isLoading && !isPostingComment,
+                            isLoading = isPostingComment,
+                            onCancel = {
+                                commentText = ""
+                                focusRequester.freeFocus()
+                            },
+                        )
+                    }
                 }
             }
         }

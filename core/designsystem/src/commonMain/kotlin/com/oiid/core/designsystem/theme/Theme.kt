@@ -6,7 +6,6 @@ import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Brush
 import oiid.core.base.designsystem.OiidMaterialTheme
 import oiid.core.base.designsystem.theme.Gradients
 import oiid.core.base.designsystem.theme.OiidThemeProviderImpl
@@ -89,7 +88,45 @@ val mezzoDarkScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestMezzoDark,
 )
 
-val nocturnScheme = darkColorScheme(
+val nocturneLightScheme = lightColorScheme(
+    primary = primaryNocturneLight,
+    onPrimary = onPrimaryNocturneLight,
+    primaryContainer = primaryContainerNocturneLight,
+    onPrimaryContainer = onPrimaryContainerNocturneLight,
+    secondary = secondaryNocturneLight,
+    onSecondary = onSecondaryNocturneLight,
+    secondaryContainer = secondaryContainerNocturneLight,
+    onSecondaryContainer = onSecondaryContainerNocturneLight,
+    tertiary = tertiaryNocturneLight,
+    onTertiary = onTertiaryNocturneLight,
+    tertiaryContainer = tertiaryContainerNocturneLight,
+    onTertiaryContainer = onTertiaryContainerNocturneLight,
+    error = errorNocturneLight,
+    onError = onErrorNocturneLight,
+    errorContainer = errorContainerNocturneLight,
+    onErrorContainer = onErrorContainerNocturneLight,
+    background = backgroundNocturneLight,
+    onBackground = onBackgroundNocturneLight,
+    surface = surfaceNocturneLight,
+    onSurface = onSurfaceNocturneLight,
+    surfaceVariant = surfaceVariantNocturneLight,
+    onSurfaceVariant = onSurfaceVariantNocturneLight,
+    outline = outlineNocturneLight,
+    outlineVariant = outlineVariantNocturneLight,
+    scrim = scrimNocturneLight,
+    inverseSurface = inverseSurfaceNocturneLight,
+    inverseOnSurface = inverseOnSurfaceNocturneLight,
+    inversePrimary = inversePrimaryNocturneLight,
+    surfaceDim = surfaceDimNocturneLight,
+    surfaceBright = surfaceBrightNocturneLight,
+    surfaceContainerLowest = surfaceContainerLowestNocturneLight,
+    surfaceContainerLow = surfaceContainerLowNocturneLight,
+    surfaceContainer = surfaceContainerNocturneLight,
+    surfaceContainerHigh = surfaceContainerHighNocturneLight,
+    surfaceContainerHighest = surfaceContainerHighestNocturneLight,
+)
+
+val nocturnDarkScheme = darkColorScheme(
     primary = primaryNocturneDark,
     onPrimary = onPrimaryNocturneDark,
     primaryContainer = primaryContainerNocturneDark,
@@ -127,6 +164,83 @@ val nocturnScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestNocturneDark,
 )
 
+
+val forteLightScheme = lightColorScheme(
+    primary = primaryForteLight,
+    onPrimary = onPrimaryForteLight,
+    primaryContainer = primaryContainerForteLight,
+    onPrimaryContainer = onPrimaryContainerForteLight,
+    secondary = secondaryForteLight,
+    onSecondary = onSecondaryForteLight,
+    secondaryContainer = secondaryContainerForteLight,
+    onSecondaryContainer = onSecondaryContainerForteLight,
+    tertiary = tertiaryForteLight,
+    onTertiary = onTertiaryForteLight,
+    tertiaryContainer = tertiaryContainerForteLight,
+    onTertiaryContainer = onTertiaryContainerForteLight,
+    error = errorForteLight,
+    onError = onErrorForteLight,
+    errorContainer = errorContainerForteLight,
+    onErrorContainer = onErrorContainerForteLight,
+    background = backgroundForteLight,
+    onBackground = onBackgroundForteLight,
+    surface = surfaceForteLight,
+    onSurface = onSurfaceForteLight,
+    surfaceVariant = surfaceVariantForteLight,
+    onSurfaceVariant = onSurfaceVariantForteLight,
+    outline = outlineForteLight,
+    outlineVariant = outlineVariantForteLight,
+    scrim = scrimForteLight,
+    inverseSurface = inverseSurfaceForteLight,
+    inverseOnSurface = inverseOnSurfaceForteLight,
+    inversePrimary = inversePrimaryForteLight,
+    surfaceDim = surfaceDimForteLight,
+    surfaceBright = surfaceBrightForteLight,
+    surfaceContainerLowest = surfaceContainerLowestForteLight,
+    surfaceContainerLow = surfaceContainerLowForteLight,
+    surfaceContainer = surfaceContainerForteLight,
+    surfaceContainerHigh = surfaceContainerHighForteLight,
+    surfaceContainerHighest = surfaceContainerHighestForteLight,
+)
+
+val forteDarkScheme = darkColorScheme(
+    primary = primaryForteDark,
+    onPrimary = onPrimaryForteDark,
+    primaryContainer = primaryContainerForteDark,
+    onPrimaryContainer = onPrimaryContainerForteDark,
+    secondary = secondaryForteDark,
+    onSecondary = onSecondaryForteDark,
+    secondaryContainer = secondaryContainerForteDark,
+    onSecondaryContainer = onSecondaryContainerForteDark,
+    tertiary = tertiaryForteDark,
+    onTertiary = onTertiaryForteDark,
+    tertiaryContainer = tertiaryContainerForteDark,
+    onTertiaryContainer = onTertiaryContainerForteDark,
+    error = errorForteDark,
+    onError = onErrorForteDark,
+    errorContainer = errorContainerForteDark,
+    onErrorContainer = onErrorContainerForteDark,
+    background = backgroundForteDark,
+    onBackground = onBackgroundForteDark,
+    surface = surfaceForteDark,
+    onSurface = onSurfaceForteDark,
+    surfaceVariant = surfaceVariantForteDark,
+    onSurfaceVariant = onSurfaceVariantForteDark,
+    outline = outlineForteDark,
+    outlineVariant = outlineVariantForteDark,
+    scrim = scrimForteDark,
+    inverseSurface = inverseSurfaceForteDark,
+    inverseOnSurface = inverseOnSurfaceForteDark,
+    inversePrimary = inversePrimaryForteDark,
+    surfaceDim = surfaceDimForteDark,
+    surfaceBright = surfaceBrightForteDark,
+    surfaceContainerLowest = surfaceContainerLowestForteDark,
+    surfaceContainerLow = surfaceContainerLowForteDark,
+    surfaceContainer = surfaceContainerForteDark,
+    surfaceContainerHigh = surfaceContainerHighForteDark,
+    surfaceContainerHighest = surfaceContainerHighestForteDark,
+)
+
 @Composable
 fun OiidTheme(
     oiidColorScheme: OiidColorScheme,
@@ -156,36 +270,10 @@ fun OiidTheme(
 }
 
 fun getGradients(oiidColorScheme: OiidColorScheme, darkTheme: Boolean): Gradients {
-    val primaryColorsGradient = Brush.horizontalGradient(
-        colors = listOf(
-            oiidColorScheme.dark.secondary,
-            oiidColorScheme.dark.primary,
-        ),
-    )
-    val grayGradient = Brush.horizontalGradient(
-        colors = listOf(
-            oiidColorScheme.dark.primaryContainer,
-            oiidColorScheme.dark.surfaceContainerLowest,
-        ),
-    )
-
     return when (oiidColorScheme) {
-        OiidColorScheme.Nocturne -> {
-            object : Gradients {
-                override val gradient: Brush get() = primaryColorsGradient
-                override val gradientNav: Brush get() = grayGradient
-            }
-        }
-
-        OiidColorScheme.Mezzo -> object : Gradients {
-            override val gradient: Brush get() = primaryColorsGradient
-            override val gradientNav: Brush get() = primaryColorsGradient
-        }
-
-        OiidColorScheme.Forte -> object : Gradients {
-            override val gradient: Brush get() = primaryColorsGradient
-            override val gradientNav: Brush get() = primaryColorsGradient
-        }
+        OiidColorScheme.Nocturne -> if (darkTheme) NocturneDarkGradients else NocturneLightGradients
+        OiidColorScheme.Mezzo -> if (darkTheme) MezzoDarkGradients else MezzoLightGradients
+        OiidColorScheme.Forte -> if (darkTheme) ForteDarkGradients else ForteLightGradients
     }
 }
 

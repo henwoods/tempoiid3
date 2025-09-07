@@ -51,7 +51,7 @@ fun EventCard(
     Card(
         modifier = modifier,
         shape = diagonalCornerShape(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         onClick = {
             onAction(EventsIntent.EventClicked(event.data))
         },
@@ -59,7 +59,7 @@ fun EventCard(
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier.fillMaxSize().padding(spacing.lg),
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.spacedBy(spacing.sm)
             ) {
                 EventCardHeader(event)
 

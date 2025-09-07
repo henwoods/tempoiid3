@@ -1,7 +1,6 @@
 package com.oiid.feature.settings
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -23,6 +22,7 @@ import androidx.compose.material.icons.outlined.Policy
 import androidx.compose.material.icons.outlined.Slideshow
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,7 +40,7 @@ import com.oiid.core.designsystem.composable.UserAvaterType
 import com.oiid.core.designsystem.generated.resources.Res
 import com.oiid.core.designsystem.generated.resources.header
 import com.oiid.core.designsystem.utils.onClick
-import oiid.core.base.designsystem.theme.OiidTheme
+import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.base.designsystem.theme.OiidTheme.spacing
 import oiid.core.base.designsystem.theme.OiidTheme.typography
 import oiid.core.base.ui.rememberImageLoader
@@ -58,44 +58,20 @@ internal fun ProfileScreenContent(
     onDeleteAccountClick: () -> Unit,
 ) {
     val imageLoader = rememberImageLoader(LocalPlatformContext.current)
+    Surface {
+        BoxWithConstraints(modifier = modifier.fillMaxSize()) {
+            val avatarSize = 128.dp
+            val avatarSizePx = with(LocalDensity.current) { avatarSize.toPx() }
 
-    BoxWithConstraints(modifier = modifier.fillMaxSize().background(OiidTheme.colorScheme.background)) {
-        val avatarSize = 128.dp
-        val avatarSizePx = with(LocalDensity.current) { avatarSize.toPx() }
+            val imageHeightPercentage = 0.55f
+            val splitY = constraints.maxHeight * imageHeightPercentage
+            val avatarTopOffset = splitY - (avatarSizePx / 2)
 
-        val imageHeightPercentage = 0.55f
-        val splitY = constraints.maxHeight * imageHeightPercentage
-        val avatarTopOffset = splitY - (avatarSizePx / 2)
+            val avatarOffsetDp = with(LocalDensity.current) { avatarTopOffset.toDp() }
+            val splitDp = with(LocalDensity.current) { splitY.toDp() }
 
-        val avatarOffsetDp = with(LocalDensity.current) { avatarTopOffset.toDp() }
-        val splitDp = with(LocalDensity.current) { splitY.toDp() }
-
-        when (profileUiState) {
-            is ProfileUiState.Loading -> {
-                Image(
-                    bitmap = imageResource(Res.drawable.header),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = "Header",
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight(imageHeightPercentage).align(Alignment.TopCenter),
-                )
-
-                LinearProgress(
-                    modifier = Modifier.align(Alignment.TopCenter).offset(y = splitDp),
-                )
-            }
-
-            is ProfileUiState.Error -> {
-                Text(
-                    text = "Error: ${profileUiState.message}",
-                    color = OiidTheme.colorScheme.error,
-                    modifier = Modifier.align(Alignment.Center).padding(OiidTheme.spacing.md),
-                )
-            }
-
-            is ProfileUiState.Success -> {
-                val profileData = profileUiState.profileData
-
-                if (profileData.headerImageUrl.isNullOrEmpty()) {
+            when (profileUiState) {
+                is ProfileUiState.Loading -> {
                     Image(
                         bitmap = imageResource(Res.drawable.header),
                         contentScale = ContentScale.Crop,
@@ -103,78 +79,105 @@ internal fun ProfileScreenContent(
                         modifier = Modifier.fillMaxWidth().fillMaxHeight(imageHeightPercentage)
                             .align(Alignment.TopCenter),
                     )
-                } else {
-                    SubcomposeAsyncImage(
-                        model = profileData.headerImageUrl,
-                        contentScale = ContentScale.Crop,
-                        contentDescription = "Header",
-                        modifier = Modifier.fillMaxWidth().fillMaxHeight(imageHeightPercentage)
-                            .align(Alignment.TopCenter),
-                        imageLoader = imageLoader,
-                        loading = {
-                            Image(
-                                bitmap = imageResource(Res.drawable.header),
-                                contentScale = ContentScale.Crop,
-                                contentDescription = "Header",
-                                modifier = Modifier.fillMaxWidth().fillMaxHeight(1f),
-                            )
-                        },
+
+                    LinearProgress(
+                        modifier = Modifier.align(Alignment.TopCenter).offset(y = splitDp),
                     )
                 }
 
-                Column(
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight(1f - imageHeightPercentage)
-                        .align(Alignment.BottomCenter).padding(top = avatarSize / 2),
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(spacing.md, Alignment.CenterHorizontally),
-                        modifier = Modifier.fillMaxWidth().padding(OiidTheme.spacing.md).onClick(
-                            onClick = {
-                                onEditProfileClick()
+                is ProfileUiState.Error -> {
+                    Text(
+                        text = "Error: ${profileUiState.message}",
+                        color = colorScheme.error,
+                        modifier = Modifier.align(Alignment.Center).padding(spacing.md),
+                    )
+                }
+
+                is ProfileUiState.Success -> {
+                    val profileData = profileUiState.profileData
+
+                    if (profileData.headerImageUrl.isNullOrEmpty()) {
+                        Image(
+                            bitmap = imageResource(Res.drawable.header),
+                            contentScale = ContentScale.Crop,
+                            contentDescription = "Header",
+                            modifier = Modifier.fillMaxWidth().fillMaxHeight(imageHeightPercentage)
+                                .align(Alignment.TopCenter),
+                        )
+                    } else {
+                        SubcomposeAsyncImage(
+                            model = profileData.headerImageUrl,
+                            contentScale = ContentScale.Crop,
+                            contentDescription = "Header",
+                            modifier = Modifier.fillMaxWidth().fillMaxHeight(imageHeightPercentage)
+                                .align(Alignment.TopCenter),
+                            imageLoader = imageLoader,
+                            loading = {
+                                Image(
+                                    bitmap = imageResource(Res.drawable.header),
+                                    contentScale = ContentScale.Crop,
+                                    contentDescription = "Header",
+                                    modifier = Modifier.fillMaxWidth().fillMaxHeight(1f),
+                                )
                             },
-                        ),
-                    ) {
-                        if (profileData.name.isEmpty()) {
-                            Spacer(Modifier.size(spacing.lg))
-                        }
-
-                        Text(text = profileData.name.ifEmpty { "No name set" }, style = typography.headlineSmall)
-
-                        if (profileData.name.isEmpty()) {
-                            Icon(
-                                imageVector = Icons.Default.EditNote,
-                                modifier = Modifier.onClick(
-                                    onClick = {
-                                        onEditProfileClick()
-                                    },
-                                ),
-                                contentDescription = "Edit profile",
-                            )
-                        }
+                        )
                     }
 
-                    BasicTextField(
-                        modifier = Modifier.fillMaxSize().padding(horizontal = spacing.md),
-                        value = profileData.bio.ifEmpty { "No bio set" },
-                        onValueChange = { },
-                        enabled = false,
-                        textStyle = OiidTheme.typography.bodyMedium.copy(color = OiidTheme.colorScheme.onSurface),
+                    Column(
+                        modifier = Modifier.fillMaxWidth().fillMaxHeight(1f - imageHeightPercentage)
+                            .align(Alignment.BottomCenter).padding(top = avatarSize / 2),
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(spacing.md, Alignment.CenterHorizontally),
+                            modifier = Modifier.fillMaxWidth().padding(spacing.md).onClick(
+                                onClick = {
+                                    onEditProfileClick()
+                                },
+                            ),
+                        ) {
+                            if (profileData.name.isEmpty()) {
+                                Spacer(Modifier.size(spacing.lg))
+                            }
+
+                            Text(text = profileData.name.ifEmpty { "No name set" }, style = typography.headlineSmall)
+
+                            if (profileData.name.isEmpty()) {
+                                Icon(
+                                    imageVector = Icons.Default.EditNote,
+                                    modifier = Modifier.onClick(
+                                        onClick = {
+                                            onEditProfileClick()
+                                        },
+                                    ),
+                                    contentDescription = "Edit profile",
+                                )
+                            }
+                        }
+
+                        BasicTextField(
+                            modifier = Modifier.fillMaxSize().padding(horizontal = spacing.md),
+                            value = profileData.bio.ifEmpty { "No bio set" },
+                            onValueChange = { },
+                            enabled = false,
+                            textStyle = typography.bodyMedium.copy(color = colorScheme.onSurface),
+                        )
+                    }
+
+                    UserAvatar(
+                        type = UserAvaterType.Profile,
+                        imageUrl = profileData.profileImageUrl,
+                        modifier = Modifier.size(avatarSize).align(Alignment.TopCenter).offset(y = avatarOffsetDp),
                     )
                 }
-
-                UserAvatar(
-                    type = UserAvaterType.Profile,
-                    imageUrl = profileData.profileImageUrl,
-                    modifier = Modifier.size(avatarSize).align(Alignment.TopCenter).offset(y = avatarOffsetDp),
-                )
             }
         }
 
         PopupMenu(
             alignment = Alignment.TopEnd,
             finalSeparatorOffset = 2,
-            modifier = Modifier.fillMaxWidth().padding(OiidTheme.spacing.md),
+            modifier = Modifier.fillMaxWidth().padding(spacing.md),
+            iconColor = colorScheme.onPrimary,
             options = listOf(
                 DropdownOption("edit", "Edit profile", Icons.Outlined.Edit, true),
                 DropdownOption("terms", "Terms and Conditions", Icons.Outlined.Info, true),

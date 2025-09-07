@@ -1,6 +1,5 @@
 package cmp.navigation.ui
 
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,8 +14,8 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import cmp.navigation.utils.TopLevelDestination
 import com.oiid.core.designsystem.components.OiidNavigationBar
 import com.oiid.core.designsystem.components.OiidNavigationBarItem
-import oiid.core.base.designsystem.theme.OiidTheme.typography
 import com.oiid.core.designsystem.navBarHeight
+import oiid.core.base.designsystem.theme.OiidTheme.typography
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

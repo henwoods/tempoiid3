@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -17,6 +16,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
+import oiid.core.base.designsystem.theme.OiidTheme.spacing
 
 @Composable
 fun RowScope.OiidNavigationBarItem(
@@ -30,13 +30,12 @@ fun RowScope.OiidNavigationBarItem(
     label: @Composable (() -> Unit)? = null,
 ) {
     NavigationBarItem(
-        colors = NavigationBarItemDefaults.colors()
-            .copy(
-                selectedIconColor = MaterialTheme.colorScheme.onSurface,
-                unselectedIconColor = MaterialTheme.colorScheme.onSurface,
-                selectedTextColor = MaterialTheme.colorScheme.onSurface,
-                unselectedTextColor = MaterialTheme.colorScheme.onSurface,
-                selectedIndicatorColor = Color.Transparent,
+        colors = NavigationBarItemDefaults.colors().copy(
+            selectedIconColor = colorScheme.onTertiary,
+            unselectedIconColor = colorScheme.onTertiary,
+            selectedTextColor = colorScheme.onTertiary,
+            unselectedTextColor = colorScheme.onTertiary,
+            selectedIndicatorColor = Color.Transparent,
 
             ),
         selected = selected,
@@ -65,17 +64,14 @@ fun OiidNavigationBar(
     val cornerShape = RoundedCornerShape(50)
 
     Surface(
-        modifier = modifier.background(Color.Transparent)
-            .clip(cornerShape).padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
-        tonalElevation = 4.dp,
+        modifier = modifier.background(Color.Transparent).clip(cornerShape)
+            .padding(bottom = spacing.md, start = spacing.md, end = spacing.md),
+        tonalElevation = spacing.xs,
         shape = cornerShape,
     ) {
-        Box(
-            modifier = Modifier
-                .background(brush = colorScheme.gradients.gradientNav),
-        ) {
+        Box(modifier = Modifier.background(brush = colorScheme.gradients.pillBackground, alpha = .75f)) {
             NavigationBar(
-                modifier = modifier.padding(horizontal = 8.dp),
+                modifier = modifier.padding(horizontal = spacing.sm),
                 containerColor = Color.Transparent,
                 tonalElevation = 0.dp,
                 content = content,

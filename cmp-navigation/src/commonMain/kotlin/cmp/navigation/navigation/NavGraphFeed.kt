@@ -19,6 +19,7 @@ import com.oiid.feature.feed.detail.postDetailArguments
 
 fun NavGraphBuilder.feedGraph(
     modifier: Modifier,
+    inDarkTheme: Boolean,
     navController: NavController,
     appBar: @Composable () -> Unit,
 ) {
@@ -36,6 +37,7 @@ fun NavGraphBuilder.feedGraph(
             HomeFeedScreen(
                 modifier = modifier,
                 appBar = appBar,
+                inDarkTheme = inDarkTheme,
                 onPostClicked = { postId ->
                     navController.navigateToPostDetail(postId, artistId())
                 },

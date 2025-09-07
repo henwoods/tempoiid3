@@ -69,7 +69,7 @@ fun FeedItemActions(
                 painter = painterResource(
                     if (post.isLikedByUser) Res.drawable.liked else Res.drawable.like,
                 ),
-                brush = if (post.isLikedByUser) colorScheme.gradients.gradient else null,
+                brush = if (post.isLikedByUser) colorScheme.gradients.buttonImageHighlightColor else null,
             )
             FeedItemTextAction(
                 text = "${post.numberOfComments} comments",

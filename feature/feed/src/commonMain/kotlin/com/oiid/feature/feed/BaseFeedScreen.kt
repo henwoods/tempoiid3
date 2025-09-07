@@ -48,7 +48,7 @@ fun BaseFeedScreen(
     modifier: Modifier = Modifier,
     appBar: @Composable () -> Unit,
     uiState: FeedUiState,
-    backgroundColor: Color = colorScheme.surface,
+    listBackgroundColor: Color = colorScheme.surface,
     divider: @Composable (() -> Unit)? = null,
     selectedItem: NavToPost?,
     showContent: Boolean = true,
@@ -132,7 +132,7 @@ fun BaseFeedScreen(
                                     exit = fadeOut(),
                                 ) {
                                     FeedList(
-                                        modifier = Modifier.background(backgroundColor),
+                                        modifier = Modifier.background(listBackgroundColor),
                                         uiState = uiState,
                                         onHandleIntent = confirmationDialogState::handleIntent,
                                         divider = divider,

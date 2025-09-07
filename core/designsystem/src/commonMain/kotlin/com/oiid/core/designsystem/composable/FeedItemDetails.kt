@@ -44,7 +44,7 @@ fun FeedItemDetails(
                     } else {
                         typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                     },
-                    color = colorScheme.onPrimary,
+                    color = colorScheme.onSurface,
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(spacing.sm),
@@ -62,7 +62,7 @@ fun FeedItemDetails(
                                 fontWeight = FontWeight.Light,
                             )
                         },
-                        color = colorScheme.onPrimary,
+                        color = colorScheme.onSurface,
                     )
                     if (badges != null) {
                         badges()

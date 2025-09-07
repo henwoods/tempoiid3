@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.oiid.core.designsystem.diagonalCornerShape
 import com.oiid.feature.feed.list.FeedListItemUiState
 import oiid.core.base.designsystem.theme.OiidTheme
+import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.ui.FeedIntent
 
 @Composable
@@ -30,6 +31,7 @@ fun PostCard(
         shape = shape,
         modifier = modifier.fillMaxWidth().padding(horizontal = 0.dp).shadow(0.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        colors = CardDefaults.cardColors().copy(containerColor = colorScheme.surface),
         onClick = {
             onHandleIntent(FeedIntent.ItemSelected(uiState.post))
         },

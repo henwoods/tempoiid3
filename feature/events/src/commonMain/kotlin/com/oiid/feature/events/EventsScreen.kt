@@ -81,8 +81,6 @@ fun EventsScreen(
                         }
                     }
                 }
-
-
             },
         )
     }

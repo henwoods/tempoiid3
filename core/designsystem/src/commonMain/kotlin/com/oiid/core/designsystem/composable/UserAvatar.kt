@@ -22,14 +22,15 @@ import oiid.core.base.ui.rememberImageLoader
 import org.jetbrains.compose.resources.imageResource
 
 enum class UserAvaterType {
-    Profile,
-    Primary,
-    Secondary,
-    Tertiary,
+    Profile, Primary, Secondary, Tertiary,
 }
 
 @Composable
-fun UserAvatar(modifier: Modifier = Modifier, type: UserAvaterType, imageUrl: String? = null, name: String? = null) {
+fun UserAvatar(
+    modifier: Modifier = Modifier,
+    type: UserAvaterType,
+    imageUrl: String? = null,
+) {
     val imageLoader = rememberImageLoader(LocalPlatformContext.current)
     val size = when (type) {
         UserAvaterType.Profile -> 128.dp
@@ -48,13 +49,12 @@ fun UserAvatar(modifier: Modifier = Modifier, type: UserAvaterType, imageUrl: St
     val colors = when (type) {
         UserAvaterType.Profile -> colorScheme.primary
         UserAvaterType.Primary -> colorScheme.primary
-        UserAvaterType.Secondary -> colorScheme.secondary
+        UserAvaterType.Secondary -> colorScheme.tertiary
         UserAvaterType.Tertiary -> colorScheme.tertiary
     }
 
     Box(
-        modifier = modifier.size(size).clip(CircleShape)
-            .background(colors.copy(alpha = 0.2f)),
+        modifier = modifier.size(size).clip(CircleShape).background(colors.copy(alpha = 0.2f)),
         contentAlignment = Alignment.Center,
     ) {
         if (!imageUrl.isNullOrEmpty()) {
@@ -66,9 +66,9 @@ fun UserAvatar(modifier: Modifier = Modifier, type: UserAvaterType, imageUrl: St
                 imageLoader = imageLoader,
                 loading = {
                     Image(
-                        modifier = Modifier.size(size).background(colorScheme.primary).padding(padding),
+                        modifier = Modifier.size(size).background(colorScheme.gradients.profileBackground).padding(padding),
                         contentScale = ContentScale.Inside,
-                        colorFilter = ColorFilter.tint(colorScheme.onPrimary),
+                        colorFilter = ColorFilter.tint(colorScheme.onTertiary),
                         bitmap = imageResource(Res.drawable.default_avatar),
                         contentDescription = "Default Avatar",
                     )
@@ -76,9 +76,9 @@ fun UserAvatar(modifier: Modifier = Modifier, type: UserAvaterType, imageUrl: St
             )
         } else {
             Image(
-                modifier = Modifier.size(size).background(colorScheme.gradients.gradient).padding(padding),
+                modifier = Modifier.size(size).background(colorScheme.gradients.profileBackground).padding(padding),
                 contentScale = ContentScale.Inside,
-                colorFilter = ColorFilter.tint(colorScheme.onPrimary),
+                colorFilter = ColorFilter.tint(colorScheme.onTertiary),
                 bitmap = imageResource(Res.drawable.default_avatar),
                 contentDescription = "Default Avatar",
             )

@@ -9,6 +9,7 @@ import cmp.navigation.ui.App
 import com.oiid.core.config.oiidTheme
 import com.oiid.core.data.utils.NetworkMonitor
 import com.oiid.core.designsystem.theme.OiidTheme
+import oiid.core.base.designsystem.theme.SystemBarsEffect
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -25,19 +26,19 @@ fun ComposeApp(
     }
 
     val isSystemInDarkTheme = uiState.shouldUseDarkTheme(isSystemInDarkTheme())
-    val forceLightTheme = false
-    val useDarkTheme = true
+
+    SystemBarsEffect(isSystemInDarkTheme)
 
     OiidTheme(
         oiidColorScheme = oiidTheme(),
-        darkTheme = uiState.shouldUseDarkTheme(useDarkTheme),
+        darkTheme = uiState.shouldUseDarkTheme(isSystemInDarkTheme),
         androidTheme = uiState.shouldUseAndroidTheme,
         useDynamicColor = uiState.shouldDisplayDynamicTheming,
     ) {
         App(
             networkMonitor = networkMonitor,
             modifier = modifier,
-            isDark = useDarkTheme,
+            isDarkTheme = isSystemInDarkTheme,
         )
     }
 }

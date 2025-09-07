@@ -79,7 +79,7 @@ private fun CreatePostBottomSheetContent(
     val isValid = title.isNotBlank() && content.isNotBlank()
 
     Column(
-        modifier = modifier.background(colorScheme.surface).fillMaxWidth().padding(spacing.lg).navigationBarsPadding(),
+        modifier = modifier.background(colorScheme.background).fillMaxWidth().padding(spacing.lg).navigationBarsPadding(),
         verticalArrangement = Arrangement.spacedBy(spacing.md),
     ) {
         Row(
@@ -92,7 +92,7 @@ private fun CreatePostBottomSheetContent(
             OiidIconButton(
                 imageVector = Icons.Default.Close,
                 contentDescription = "Close",
-                color = colorScheme.onPrimary,
+                color = colorScheme.onSurface,
                 onClick = onDismiss,
             )
         }
@@ -125,7 +125,7 @@ private fun CreatePostBottomSheetContent(
                 onClick = onDismiss,
                 modifier = Modifier.weight(1f),
             ) {
-                Text(text = "Cancel", color = colorScheme.onPrimary)
+                Text(text = "Cancel", color = colorScheme.onSurface)
             }
 
             OiidButton(
@@ -164,11 +164,11 @@ fun CreatePostText(
         colors = TextFieldDefaults.colors().copy(
             focusedContainerColor = colorScheme.surfaceContainer,
             unfocusedContainerColor = colorScheme.surfaceContainer,
-            focusedLabelColor = colorScheme.onPrimary,
+            focusedLabelColor = colorScheme.onSurface,
             unfocusedIndicatorColor = colorScheme.surfaceContainer,
             disabledIndicatorColor = colorScheme.surfaceContainer,
             focusedIndicatorColor = colorScheme.surfaceContainer,
-            cursorColor = colorScheme.onPrimary,
+            cursorColor = colorScheme.onSurface,
         ),
         onValueChange = { newValue ->
             if (maxLength != null && newValue.length <= maxLength) {

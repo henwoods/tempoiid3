@@ -1,15 +1,13 @@
 package com.oiid.feature.fanzone
 
-import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.oiid.feature.fanzone.composables.FanzoneEditPostBottomSheet
 import com.oiid.feature.fanzone.detail.FanzonePostPostDetailViewModel
-import com.oiid.feature.feed.detail.PostDetailScreenContent
 import com.oiid.feature.feed.detail.PostCommentUiState
+import com.oiid.feature.feed.detail.PostDetailScreenContent
 import com.oiid.feature.feed.detail.PostDetailUiState
-import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.ui.FeedIntent
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -32,7 +30,7 @@ fun FanzoneDetailScreen(
     val showCreatePostDialog = viewModel.showCreatePostDialog.collectAsState()
 
     PostDetailScreenContent(
-        modifier = modifier.background(colorScheme.background),
+        modifier = modifier,
         networkStatus = if (!showCreatePostDialog.value) postCommentState.value else PostCommentUiState(),
         postUiState = postUiState.value,
         currentUserProfile = currentUserProfile.value,

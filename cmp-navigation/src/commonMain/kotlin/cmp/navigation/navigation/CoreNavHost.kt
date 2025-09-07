@@ -22,6 +22,7 @@ internal fun FeatureNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     appBar: @Composable () -> Unit,
+    inDarkTheme: Boolean,
     authViewModel: AuthViewModel = koinViewModel(),
 ) {
     val authState by authViewModel.isAuthenticated.collectAsState()
@@ -46,6 +47,7 @@ internal fun FeatureNavHost(
                             }
                         }
                     }
+
                     AuthState.Unauthenticated -> {
                         navController.navigate(NavigationRoutes.Unauthenticated.NavigationRoute.route) {
                             popUpTo(NavigationRoutes.Feed.NavigationRoute.route) {
@@ -53,6 +55,7 @@ internal fun FeatureNavHost(
                             }
                         }
                     }
+
                     else -> Unit
                 }
             }.launchIn(this)
@@ -78,7 +81,7 @@ internal fun FeatureNavHost(
 
         onboardingGraph(navController)
 
-        feedGraph(modifier, navController, appBar)
+        feedGraph(modifier, inDarkTheme, navController, appBar)
 
         profileScreen(
             onLogout = {

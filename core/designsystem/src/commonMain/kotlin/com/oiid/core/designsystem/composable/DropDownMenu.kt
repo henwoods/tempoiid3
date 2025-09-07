@@ -38,6 +38,7 @@ import com.composeunstyled.DropdownMenuPanel
 import com.composeunstyled.Icon
 import com.composeunstyled.Text
 import oiid.core.base.designsystem.theme.OiidTheme
+import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 
 const val OPTION_KEY_REPLY = "reply"
 const val OPTION_KEY_LIKE_COMMENT = "like_comment"
@@ -58,6 +59,7 @@ fun PopupMenu(
     alignment: Alignment = Alignment.TopCenter,
     options: List<DropdownOption>,
     finalSeparatorOffset: Int = 1,
+    iconColor: Color = colorScheme.onSurface,
     size: Dp = 24.dp,
     onOptionClick: (optionKey: String) -> Unit,
 ) {
@@ -72,7 +74,7 @@ fun PopupMenu(
                 },
                 content = {
                     Icon(
-                        tint = OiidTheme.colorScheme.onSurface,
+                        tint = iconColor,
                         imageVector = Icons.Outlined.MoreHoriz,
                         contentDescription = "More menu",
                     )

@@ -3,12 +3,23 @@ package com.oiid.feature.feed.list
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import com.oiid.core.designsystem.diagonalCornerShape
 import com.oiid.core.model.PostItem
 import com.oiid.feature.feed.composables.PostCard
 import oiid.core.ui.FeedIntent
 
-data class FeedListItemUiState(val post: PostItem, val isPlaying: Boolean, val isForum: Boolean, val isDetail: Boolean)
+data class FeedListItemUiState(
+    val post: PostItem, val isPlaying: Boolean, val isForum: Boolean,
+    val isDetail:
+    Boolean,
+)
+
+@Composable
+fun FeedListItemUiState.cardShape(): Shape {
+    return if (isForum) RectangleShape else diagonalCornerShape()
+}
 
 @Composable
 fun FeedListItem(
@@ -22,7 +33,7 @@ fun FeedListItem(
     PostCard(
         onHandleIntent = onHandleIntent,
         uiState = uiState,
-        shape = diagonalCornerShape(),
+        shape = uiState.cardShape(),
         content = {
             Column {
                 FeedContent(

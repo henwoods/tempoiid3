@@ -55,8 +55,7 @@ class AppState(
     networkMonitor: NetworkMonitor,
 ) {
     val currentDestination: NavDestination?
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination
+        @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
@@ -64,6 +63,7 @@ class AppState(
             NavigationRoutes.Feed.Detail.route -> TopLevelDestination.Home
             NavigationRoutes.Profile.NavigationRoute.route -> TopLevelDestination.Profile
             NavigationRoutes.Fanzone.NavigationRoute.route -> TopLevelDestination.Fanzone
+            NavigationRoutes.Fanzone.Detail.route -> TopLevelDestination.Fanzone
             NavigationRoutes.Events.NavigationRoute.route -> TopLevelDestination.Events
             NavigationRoutes.Library.NavigationRoute.route -> TopLevelDestination.Library
             NavigationRoutes.Merch.NavigationRoute.route -> TopLevelDestination.Merch
@@ -74,9 +74,7 @@ class AppState(
     val shouldShowBottomBar: Boolean = true
     //   get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
-    val isOffline = networkMonitor.isOnline
-        .map(Boolean::not)
-        .stateIn(
+    val isOffline = networkMonitor.isOnline.map(Boolean::not).stateIn(
             scope = coroutineScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = false,
@@ -104,11 +102,26 @@ class AppState(
 
             when (topLevelDestination) {
                 TopLevelDestination.Home -> navController.navigate(NavigationRoutes.Feed.List.route, topLevelNavOptions)
-                TopLevelDestination.Library -> navController.navigateToComingSoon(NavigationRoutes.Library.NavigationRoute.route, topLevelNavOptions)
-                TopLevelDestination.Events -> navController.navigateToComingSoon(NavigationRoutes.Events.NavigationRoute.route, topLevelNavOptions)
-                TopLevelDestination.Fanzone -> navController.navigate(NavigationRoutes.Fanzone.NavigationRoute.route, topLevelNavOptions)
+                TopLevelDestination.Library -> navController.navigateToComingSoon(
+                    NavigationRoutes.Library.NavigationRoute.route,
+                    topLevelNavOptions,
+                )
+
+                TopLevelDestination.Events -> navController.navigateToComingSoon(
+                    NavigationRoutes.Events.NavigationRoute.route,
+                    topLevelNavOptions,
+                )
+
+                TopLevelDestination.Fanzone -> navController.navigate(
+                    NavigationRoutes.Fanzone.NavigationRoute.route,
+                    topLevelNavOptions,
+                )
+
                 TopLevelDestination.Profile -> navController.navigateToProfile(topLevelNavOptions)
-                TopLevelDestination.Merch -> navController.navigateToComingSoon(NavigationRoutes.Merch.NavigationRoute.route, topLevelNavOptions)
+                TopLevelDestination.Merch -> navController.navigateToComingSoon(
+                    NavigationRoutes.Merch.NavigationRoute.route,
+                    topLevelNavOptions,
+                )
             }
         }
     }

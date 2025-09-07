@@ -25,7 +25,6 @@ fun FeedPanel(
             appBar()
         }
 
-        // Show LinearProgress only when refreshing (has existing data)
         if (loadState.isRefreshing) {
             LinearProgress(modifier = Modifier.fillMaxWidth())
         }

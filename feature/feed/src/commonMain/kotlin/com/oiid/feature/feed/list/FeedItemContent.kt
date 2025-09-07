@@ -22,6 +22,7 @@ import com.oiid.feature.feed.FeedPostActionsPopup
 import com.oiid.feature.feed.UserPostActionsPopup
 import com.oiid.feature.feed.comment.CommentBadge
 import com.oiid.feature.feed.comment.getPostTagType
+import com.oiid.feature.feed.composables.FeedUserAvatar
 import com.oiid.feature.player.video.VideoPlayer
 import oiid.core.base.designsystem.theme.OiidTheme
 import oiid.core.base.designsystem.theme.OiidTheme.spacing
@@ -44,7 +45,7 @@ fun FeedContent(
             val postBadgeType = getPostTagType(post)
             FeedItemDetails(
                 avatar = {
-                    UserAvatar(type = UserAvaterType.Tertiary, imageUrl = post.profileImage)
+                    FeedUserAvatar(type = UserAvaterType.Tertiary, imageUrl = post.profileImage)
                 },
                 modifier = Modifier.padding(top = spacing.md, start = spacing.md, end = spacing.md),
                 name = post.name,

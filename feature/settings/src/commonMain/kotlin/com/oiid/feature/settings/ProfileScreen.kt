@@ -1,7 +1,5 @@
 package com.oiid.feature.settings
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,7 +14,6 @@ import com.oiid.core.data.Links.Companion.PRIVACY_POLICY
 import com.oiid.core.data.Links.Companion.TOS
 import com.oiid.feature.auth.OnboardingScreen
 import oiid.core.base.designsystem.AppStateViewModel
-import oiid.core.base.designsystem.theme.OiidTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -78,7 +75,7 @@ fun ProfileScreen(
         }
 
         ProfileScreenContent(
-            modifier = modifier.fillMaxSize().background(OiidTheme.colorScheme.surfaceVariant),
+            modifier = modifier,
             profileUiState = profileUiState,
             onLogoutClick = {
                 profileViewModel.onLogout {

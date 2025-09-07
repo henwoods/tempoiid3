@@ -28,16 +28,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import oiid.core.base.designsystem.theme.OiidTheme
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.base.designsystem.theme.OiidTheme.spacing
+import oiid.core.base.designsystem.theme.OiidTheme.typography
 
 enum class CircularProgressSize {
     Icon, Screen
 }
 
 @Composable
-fun CircularProgress(modifier: Modifier = Modifier, size: CircularProgressSize = CircularProgressSize.Icon, color: Color = colorScheme.primary) {
+fun CircularProgress(
+    modifier: Modifier = Modifier,
+    size: CircularProgressSize = CircularProgressSize.Icon,
+    color: Color = colorScheme.primary,
+) {
     val sizeDp = when (size) {
         CircularProgressSize.Icon -> 24.dp
         CircularProgressSize.Screen -> 48.dp
@@ -56,18 +60,18 @@ fun LinearProgress(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun FeedProgress(text: String) {
+fun FeedProgress(text: String, size: Dp = 192.dp) {
     Column(
         verticalArrangement = Arrangement.spacedBy(spacing.md),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = text,
-            style = OiidTheme.typography.headlineLarge,
+            style = typography.headlineLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
         )
-        FiveLinesProgress(size = 192.dp)
+        FiveLinesProgress(size = size)
     }
 }
 

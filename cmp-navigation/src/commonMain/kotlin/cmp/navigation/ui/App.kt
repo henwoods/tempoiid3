@@ -86,7 +86,7 @@ class TabViewModel(tabRepository: TabRepository) : ViewModel() {
 internal fun App(
     modifier: Modifier = Modifier,
     networkMonitor: NetworkMonitor,
-    isDark: Boolean,
+    isDarkTheme: Boolean,
     appStateViewModel: AppStateViewModel = koinViewModel(),
     tabViewModel: TabViewModel = koinViewModel(),
 ) {
@@ -142,7 +142,7 @@ internal fun App(
     val appBarLambda = remember(destination) {
         @Composable {
             ArtistAppBar(
-                isDark = isDark,
+                isDark = isDarkTheme,
                 destination = destination,
                 destinationInfo = destinationInfo,
                 appState = appState,
@@ -188,6 +188,7 @@ internal fun App(
                     FeatureNavHost(
                         navController = appState.navController,
                         appBar = appBarLambda,
+                        inDarkTheme = isDarkTheme,
                     )
                 }
             }

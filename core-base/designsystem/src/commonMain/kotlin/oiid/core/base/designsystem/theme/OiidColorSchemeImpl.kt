@@ -59,8 +59,32 @@ data class OiidColorSchemeImpl(
     override val surfaceContainerHighest: Color = Color(0xFFCFC8D0),
     override val surfaceTint: Color = Color(0xFF6750A4),
     override val gradients: Gradients = object : Gradients {
-        override val gradient: Brush get() = Brush.horizontalGradient(listOf(secondary, primary))
-        override val gradientNav: Brush get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val pillBackground: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val pillBackgroundReversed: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val defaultGradient: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val playerGradient: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val feedLogoGradient: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val priceLabelBackground: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val selectedTabItem: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val unselectedTabItem: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val buttonImageColor: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val buttonImageHighlightColor: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val profileBackground: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val bandAffiliateLabelBackground: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
+        override val postAuthorLabelBackground: Brush
+            get() = Brush.horizontalGradient(listOf(secondary, primary))
     },
 ) : OiidColorScheme
 

@@ -29,14 +29,12 @@ fun ConfirmationDialog(
                 Text(
                     text = title,
                     style = typography.titleLarge,
-                    color = colorScheme.onSurface,
                 )
             },
             text = {
                 Text(
                     text = message,
                     style = typography.bodyLarge,
-                    color = colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(vertical = spacing.sm),
                 )
             },
@@ -51,7 +49,7 @@ fun ConfirmationDialog(
             },
             dismissButton = if (dismissButtonText != null) {
                 {
-                    OiidTextButton(text = dismissButtonText, onClick = onDismiss, textColor = colorScheme.onSurface)
+                    OiidTextButton(text = dismissButtonText, onClick = onDismiss)
                 }
             } else {
                 null

@@ -46,9 +46,7 @@ fun NavGraphBuilder.fanzoneScreen(
         arguments = postDetailArguments,
         route = NavigationRoutes.Fanzone.Detail.route,
         enterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { fullWidth -> fullWidth },
-            )
+            slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth },)
         },
         exitTransition = { slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) },
     ) { backStackEntry ->

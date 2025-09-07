@@ -33,7 +33,7 @@ fun CommentInputField(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(OiidTheme.spacing.sm),
     ) {
-        UserAvatar(type = UserAvaterType.Secondary, imageUrl = userAvatarImageUrl, name = userName)
+        UserAvatar(type = UserAvaterType.Secondary, imageUrl = userAvatarImageUrl)
         ReplyInput(
             value = value,
             focusRequester = focusRequester,

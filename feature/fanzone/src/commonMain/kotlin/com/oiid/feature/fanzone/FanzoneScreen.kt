@@ -1,6 +1,7 @@
 package com.oiid.feature.fanzone
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
@@ -27,9 +28,10 @@ fun FanzoneScreen(
     onPostClicked: (String) -> Unit,
     onNavigateToEditProfile: () -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val selectedItem by viewModel.selectedItem.collectAsStateWithLifecycle()
-    val coroutineScope = rememberCoroutineScope()
     val isPostingComment = viewModel.postingCommentState.collectAsState().value.isLoading
     val createPostModal = viewModel.showCreatePostDialog.collectAsState(false)
     val editingPost by viewModel.editingPost.collectAsStateWithLifecycle()
@@ -38,7 +40,7 @@ fun FanzoneScreen(
     UiEventHandler(uiEventFlow = viewModel.uiEvent)
 
     BaseFeedScreen(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         appBar = {
             FanzoneScreenAppBar {
                 coroutineScope.launch {
@@ -46,8 +48,8 @@ fun FanzoneScreen(
                 }
             }
         },
+        listBackgroundColor = colorScheme.surface,
         uiState = uiState,
-        backgroundColor = colorScheme.background,
         selectedItem = selectedItem,
         setHasNavigated = viewModel::setHasNavigated,
         onPostClicked = onPostClicked,

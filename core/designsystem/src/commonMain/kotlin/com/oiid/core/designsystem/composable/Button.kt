@@ -80,7 +80,7 @@ fun AuthTextButton(
 fun OiidIconButton(
     modifier: Modifier = Modifier,
     imageVector: ImageVector,
-    color: Color = colorScheme.secondary,
+    color: Color = colorScheme.tertiary,
     contentDescription: String? = null,
     onClick: () -> Unit,
 ) {

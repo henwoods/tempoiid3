@@ -15,6 +15,7 @@ kotlin {
             implementation(projects.coreBase.ui)
             implementation(projects.core.network)
             implementation(projects.core.common)
+            implementation(projects.core.config)
             implementation(projects.coreBase.network)
 
             implementation(compose.ui)

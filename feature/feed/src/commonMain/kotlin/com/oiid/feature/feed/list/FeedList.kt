@@ -81,11 +81,11 @@ fun FeedList(
         }
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         if (fullscreenVideo == null) {
             LazyColumn(
                 state = listState,
-                modifier = modifier.fillMaxSize(),
+                modifier = modifier,
                 verticalArrangement = Arrangement.spacedBy(spacing.md),
                 contentPadding = bottomNavPadding(),
             ) {

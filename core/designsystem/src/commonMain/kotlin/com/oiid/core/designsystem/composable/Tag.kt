@@ -91,7 +91,7 @@ fun TagIconLabel(
     size: Dp = spacing.md,
     imageVector: ImageVector,
     contentDescription: String,
-    tint: Color = colorScheme.onPrimary,
+    tint: Color = colorScheme.onTertiary,
 ) {
     Icon(
         imageVector = imageVector,

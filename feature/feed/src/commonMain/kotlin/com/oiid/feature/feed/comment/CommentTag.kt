@@ -25,7 +25,7 @@ fun CommentBadge(
     when (type) {
         CommentTagType.BandAffiliate -> Tag(
             modifier = modifier,
-            backgroundBrush = colorScheme.gradients.gradient,
+            backgroundBrush = colorScheme.gradients.bandAffiliateLabelBackground,
             contentPadding = PaddingValues(horizontal = spacing.sm, vertical = spacing.xxs),
         ) {
             TagIconLabel(imageVector = Icons.Default.Star, contentDescription = "Band Affiliate")
@@ -35,7 +35,7 @@ fun CommentBadge(
             TagTextLabel(text = "Post author")
         }
 
-        CommentTagType.Superfan -> Tag(backgroundBrush = colorScheme.gradients.gradient) {
+        CommentTagType.Superfan -> Tag(backgroundBrush = colorScheme.gradients.bandAffiliateLabelBackground) {
             TagTextLabel(text = "SUPERFAN", color = colorScheme.onPrimary)
         }
     }
