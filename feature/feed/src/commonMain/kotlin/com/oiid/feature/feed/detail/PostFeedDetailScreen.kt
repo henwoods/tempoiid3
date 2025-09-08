@@ -24,7 +24,7 @@ import oiid.core.base.designsystem.core.TopAppBarVariant
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.ui.ConfirmationDialogs
 import oiid.core.ui.PostIntent
-import oiid.core.ui.appBarHeight
+import com.oiid.core.designsystem.appBarHeight
 import oiid.core.ui.getDialogContent
 import oiid.core.ui.getValidationDialogContent
 import oiid.core.ui.needsConfirmation

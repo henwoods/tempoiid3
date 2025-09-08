@@ -120,7 +120,7 @@ fun OiidTextButton(
     text: String,
     enabled: Boolean = true,
     onClick: () -> Unit,
-    textColor: Color =  Color.Unspecified
+    textColor: Color = Color.Unspecified,
 ) {
     TextButton(modifier = modifier, enabled = enabled, onClick = onClick) {
         Text(text = text, color = textColor)

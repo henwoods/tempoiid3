@@ -15,7 +15,8 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import cmp.navigation.utils.TopLevelDestination
 import com.oiid.core.designsystem.components.OiidNavigationBar
 import com.oiid.core.designsystem.components.OiidNavigationBarItem
-import oiid.core.base.designsystem.theme.OiidTheme
+import oiid.core.base.designsystem.theme.OiidTheme.typography
+import com.oiid.core.designsystem.navBarHeight
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -26,7 +27,7 @@ fun BottomBar(
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
 ) {
-    OiidNavigationBar(modifier = modifier.height(84.dp)) {
+    OiidNavigationBar(modifier = modifier.navBarHeight()) {
         destinations.forEach { destination ->
             val hasUnread = destinationsWithUnreadResources.contains(destination)
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
@@ -50,7 +51,7 @@ fun BottomBar(
                 label = {
                     if (destination.route != TopLevelDestination.Home.route) {
                         Text(
-                            style = OiidTheme.typography.labelSmall,
+                            style = typography.labelSmall,
                             text = stringResource(destination.iconText),
                         )
                     }

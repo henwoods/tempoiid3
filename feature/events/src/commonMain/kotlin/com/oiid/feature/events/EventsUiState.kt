@@ -27,6 +27,9 @@ data class EventsUiState(
     val events: List<EventUiState> = emptyList(),
     val error: String? = null,
 ) {
+    val isInitialLoading: Boolean = isLoading && events.isEmpty() && error == null
+    val isRefreshing: Boolean = isLoading && events.isNotEmpty()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is EventsUiState) return false

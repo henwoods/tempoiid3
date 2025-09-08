@@ -9,28 +9,24 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.oiid.core.designsystem.composable.InfoTextPanel
-import com.oiid.core.designsystem.composable.LinearProgress
+import com.oiid.core.designsystem.composable.FeedErrorPanel
+import com.oiid.core.designsystem.composable.FeedPanel
+import com.oiid.core.designsystem.composable.FeedProgress
+import com.oiid.core.designsystem.composable.rememberDelayedLoadState
 import com.oiid.core.designsystem.diagonalCornerShape
 import com.oiid.feature.feed.list.FeedList
 import com.oiid.feature.feed.list.FeedListItem
@@ -39,11 +35,8 @@ import com.oiid.feature.feed.list.FeedUiState
 import com.oiid.feature.feed.list.NavToPost
 import oiid.core.base.designsystem.AppStateViewModel
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
-import oiid.core.base.designsystem.theme.OiidTheme.spacing
-import oiid.core.base.designsystem.theme.OiidTheme.typography
 import oiid.core.ui.ConfirmationDialogs
 import oiid.core.ui.FeedIntent
-import oiid.core.ui.appBarHeight
 import oiid.core.ui.getDialogContent
 import oiid.core.ui.needsConfirmation
 import oiid.core.ui.rememberConfirmationDialogHandler
@@ -71,6 +64,8 @@ fun BaseFeedScreen(
     )
 
     val lifecycleOwner = LocalLifecycleOwner.current
+
+    val loadState = rememberDelayedLoadState(uiState.isInitialLoading, uiState.isRefreshing)
 
     LaunchedEffect(selectedItem?.item?.id) {
         selectedItem?.let { selected ->
@@ -116,63 +111,39 @@ fun BaseFeedScreen(
                 label = "ListToDetail",
             ) { targetItem ->
                 if (targetItem == null || uiState.isForum) {
-                    Column(Modifier.padding(paddingValues).fillMaxSize()) {
-                        Column(Modifier.heightIn(max = appBarHeight())) {
-                            appBar()
-                        }
+                    FeedPanel(
+                        paddingValues = paddingValues,
+                        loadState = loadState.value,
+                        appBar = appBar,
+                        content = {
+                            if (loadState.value.showProgress && uiState.isForum) {
+                                FeedProgress(text = "Loading Fan-zone...", size = 72.dp)
+                            } else {
+                                FeedErrorPanel(
+                                    error = uiState.error,
+                                    onRetryClick = {
+                                        confirmationDialogState.handleIntent(FeedIntent.RetryLoad)
+                                    },
+                                )
 
-                        if (uiState.isLoading) {
-                            LinearProgress(modifier = Modifier.fillMaxWidth())
-                        }
-
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                        ) {
-                            uiState.error?.let { error ->
                                 AnimatedVisibility(
-                                    visible = true,
-                                    enter = fadeIn(),
+                                    visible = showContent,
+                                    enter = fadeIn(animationSpec = tween(durationMillis = 300)),
                                     exit = fadeOut(),
                                 ) {
-                                    Column(modifier = Modifier.padding(spacing.md)) {
-                                        InfoTextPanel(
-                                            message = error,
-                                            buttons = {
-                                                Button(
-                                                    onClick = {
-                                                        confirmationDialogState.handleIntent(FeedIntent.RetryLoad)
-                                                    },
-                                                    colors = ButtonDefaults.textButtonColors().copy(
-                                                        containerColor = colorScheme.surfaceVariant,
-                                                        contentColor = colorScheme.onSurface,
-                                                    ),
-                                                    content = {
-                                                        Text("Retry", style = typography.bodyLarge)
-                                                    },
-                                                )
-                                            },
-                                        )
-                                    }
+                                    FeedList(
+                                        modifier = Modifier.background(backgroundColor),
+                                        uiState = uiState,
+                                        onHandleIntent = confirmationDialogState::handleIntent,
+                                        divider = divider,
+                                        sharedTransitionScope = this@SharedTransitionLayout,
+                                        animatedVisibilityScope = this@AnimatedContent,
+                                    )
                                 }
                             }
 
-                            AnimatedVisibility(
-                                visible = showContent,
-                                enter = fadeIn(animationSpec = tween(durationMillis = 300)),
-                                exit = fadeOut(),
-                            ) {
-                                FeedList(
-                                    modifier = Modifier.background(backgroundColor),
-                                    uiState = uiState,
-                                    onHandleIntent = confirmationDialogState::handleIntent,
-                                    divider = divider,
-                                    sharedTransitionScope = this@SharedTransitionLayout,
-                                    animatedVisibilityScope = this@AnimatedContent,
-                                )
-                            }
-                        }
-                    }
+                        },
+                    )
                 } else {
                     Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
                         FeedListItem(
@@ -196,4 +167,3 @@ fun BaseFeedScreen(
 
     ConfirmationDialogs(confirmationDialogState)
 }
-
