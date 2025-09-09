@@ -37,7 +37,7 @@ fun NavGraphBuilder.fanzoneScreen(
                 navController.navigateToForumPostDetail(postId, artistId())
             },
             onNavigateToEditProfile = {
-                navController.navigateToProfile()
+                navController.navigateToProfileTab()
             },
         )
     }
@@ -58,7 +58,7 @@ fun NavGraphBuilder.fanzoneScreen(
             artistId = args.artistId,
             onBackClick = { navController.popBackStack() },
             onNavigateToEditProfile = {
-                navController.navigateToProfile()
+                navController.navigateToProfileTab()
             },
         )
     }

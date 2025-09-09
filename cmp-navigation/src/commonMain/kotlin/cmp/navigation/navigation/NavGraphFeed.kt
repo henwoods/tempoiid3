@@ -57,7 +57,7 @@ fun NavGraphBuilder.feedGraph(
                 isForum = true,
                 onBackClick = { navController.popBackStack() },
                 onNavigateToEditProfile = {
-                    navController.navigateToProfile()
+                    navController.navigateToProfileTab()
                 },
             )
         }
