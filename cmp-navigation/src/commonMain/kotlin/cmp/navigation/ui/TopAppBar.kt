@@ -31,7 +31,6 @@ fun ArtistAppBar(
     destination: TopLevelDestination?,
     destinationInfo: Destinations,
     appState: AppState,
-    modifier: Modifier = Modifier,
 ) {
     Column(modifier.fillMaxSize()) {
         if (destination != null) {
@@ -72,8 +71,6 @@ fun AppBar(
     destination: TopLevelDestination?,
     modifier: Modifier = Modifier,
 ) {
-    ThemedStatusBar(Color.Transparent)
-
     CenterAlignedTopAppBar(
         title = {
             title()

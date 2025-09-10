@@ -27,8 +27,6 @@ fun ComposeApp(
 
     val isSystemInDarkTheme = uiState.shouldUseDarkTheme(isSystemInDarkTheme())
 
-    SystemBarsEffect(isSystemInDarkTheme)
-
     OiidTheme(
         oiidColorScheme = oiidTheme(),
         darkTheme = uiState.shouldUseDarkTheme(isSystemInDarkTheme),

@@ -26,13 +26,10 @@ import oiid.core.base.designsystem.core.OiidTopAppBarConfiguration
 import oiid.core.base.designsystem.core.TopAppBarVariant
 import oiid.core.base.designsystem.theme.OiidTheme.colorScheme
 import oiid.core.base.designsystem.theme.OiidTheme.typography
-import oiid.core.base.designsystem.theme.ThemedStatusBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OiidTopAppBar(configuration: OiidTopAppBarConfiguration) {
-    ThemedStatusBar(configuration.statusBarColor ?: configuration.colors?.containerColor?: colorScheme.background)
-
     val finalModifier = configuration.modifier
         .testTag(configuration.testTag ?: "OiidTopAppBar")
         .let { mod ->

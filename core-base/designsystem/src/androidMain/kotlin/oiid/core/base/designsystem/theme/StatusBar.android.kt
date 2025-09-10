@@ -9,13 +9,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 
+/**
+ * Unused class for now, we might want to use it in the future to micro manage the status bar
+ * colour on some screens, but we will do that when there is time to stuff about.
+ */
+
+
 @Composable
 actual fun ThemedStatusBar(color: Color) {
     val activity = activityFromContext()
 
     LaunchedEffect(color) {
         if (color == Color.Transparent) {
-            activity?.statusBarAutoEdgeToEdge()
+            activity?.statusBarAutoEdgeToEdge(color.isDark())
         } else {
             activity?.statusBarForceColor(color)
         }
@@ -26,8 +32,15 @@ actual fun ThemedStatusBar(color: Color) {
 actual fun SystemBarsEffect(isDarkTheme: Boolean) {
     val activity = activityFromContext()
 
-    LaunchedEffect(isDarkTheme) {
-        activity?.statusBarAutoEdgeToEdge()
+    LaunchedEffect(!isDarkTheme) {
+        activity?.enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(
+                Color.Transparent.toArgb(),
+            ),
+            navigationBarStyle = SystemBarStyle.dark(
+                Color.Transparent.toArgb(),
+            ),
+        )
     }
 }
 
@@ -48,17 +61,28 @@ private fun ComponentActivity.statusBarForceColor(color: Color) {
     )
 }
 
-private fun ComponentActivity.statusBarAutoEdgeToEdge() {
-    enableEdgeToEdge(
-        statusBarStyle = SystemBarStyle.auto(
-            lightScrim = Color.Transparent.toArgb(),
-            darkScrim = Color.Transparent.toArgb(),
-        ),
-        navigationBarStyle = SystemBarStyle.auto(
-            lightScrim = Color.Transparent.toArgb(),
-            darkScrim = Color.Transparent.toArgb(),
-        ),
-    )
+private fun ComponentActivity.statusBarAutoEdgeToEdge(isDarkTheme: Boolean) {
+    if (!isDarkTheme) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(
+                Color.Transparent.toArgb(),
+                Color.Transparent.toArgb(),
+            ),
+            navigationBarStyle = SystemBarStyle.light(
+                Color.Transparent.toArgb(),
+                Color.Transparent.toArgb(),
+            ),
+        )
+    } else {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(
+                Color.White.toArgb(),
+            ),
+            navigationBarStyle = SystemBarStyle.dark(
+                Color.White.toArgb(),
+            ),
+        )
+    }
 }
 
 private fun Color.isDark() = (red * 299 + green * 587 + blue * 114) / 1000 < 0.5

@@ -58,10 +58,12 @@ fun SystemBarsEffect() {
         val activity = context as? ComponentActivity ?: return@LaunchedEffect
 
         activity.enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(
+            statusBarStyle = SystemBarStyle.auto(
+                Color.Transparent.toArgb(),
                 Color.Transparent.toArgb(),
             ),
-            navigationBarStyle = SystemBarStyle.dark(
+            navigationBarStyle = SystemBarStyle.auto(
+                Color.Transparent.toArgb(),
                 Color.Transparent.toArgb(),
             ),
         )
