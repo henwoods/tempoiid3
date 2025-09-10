@@ -17,7 +17,7 @@ android {
     defaultConfig {
         applicationId = packageNameSpace
         versionName = System.getenv("VERSION") ?: project.dynamicVersion
-        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 1
+        versionCode = (project.findProperty("VERSION_CODE") as? String)?.toIntOrNull() ?: 1
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

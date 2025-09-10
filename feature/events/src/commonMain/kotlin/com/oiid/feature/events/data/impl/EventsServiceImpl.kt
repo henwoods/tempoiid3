@@ -36,7 +36,7 @@ class EventsServiceImpl(
 
     override suspend fun loadEvents(artistId: String): Resource<List<Event>> {
         return try {
-            Logger.d("EventsServiceImpl", Throwable("Loading events for artistId: $artistId"))
+            Logger.withTag("EventsServiceImpl").d("Loading events for artistId: $artistId")
 
             updateCache(artistId, Resource.Loading)
 
