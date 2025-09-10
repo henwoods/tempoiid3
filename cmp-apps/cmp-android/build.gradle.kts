@@ -10,14 +10,15 @@ plugins {
 }
 
 val packageNameSpace: String = libs.versions.androidPackageNamespace.get()
+val version = (project.findProperty("ENSLAVED_VERSION") as? String)
 
 android {
     namespace = "com.oiid.android"
 
     defaultConfig {
         applicationId = packageNameSpace
-        versionName = System.getenv("VERSION") ?: project.dynamicVersion
-        versionCode = (project.findProperty("VERSION_CODE") as? String)?.toIntOrNull() ?: 1
+        versionName = version
+        versionCode = (project.findProperty("ENSLAVED_VERSION_CODE") as? String)?.toIntOrNull() ?: 1
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
