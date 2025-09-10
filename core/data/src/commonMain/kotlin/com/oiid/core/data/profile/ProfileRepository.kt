@@ -20,4 +20,6 @@ interface ProfileRepository {
     suspend fun getProfileImageUploadUrl(): SignedURLResponse
     
     suspend fun getHeaderImageUploadUrl(): SignedURLResponse
+
+    fun clearProfile()
 }

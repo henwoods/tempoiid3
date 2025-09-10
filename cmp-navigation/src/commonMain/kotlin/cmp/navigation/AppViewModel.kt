@@ -3,6 +3,7 @@ package cmp.navigation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.oiid.core.data.profile.ProfileRepository
 import com.oiid.core.data.user.UserRepository
 import com.oiid.core.datastore.UserPreferencesRepository
 import com.oiid.core.model.DarkThemeConfig
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 
 class AppViewModel(
     private val settingsRepository: UserPreferencesRepository,
+    private val profileRepository: ProfileRepository,
     private val userRepository: UserRepository,
 ) : ViewModel() {
     private val _title = MutableStateFlow("")
@@ -34,7 +36,10 @@ class AppViewModel(
 
     init {
         viewModelScope.launch {
-            ensureUserId()
+            val userId = ensureUserId()
+            if (userId.isNotEmpty()) {
+                ensureProfile(userId)
+            }
         }
     }
 
@@ -54,11 +59,20 @@ class AppViewModel(
                 userId
             }
 
+            is Resource.Error -> {
+                Logger.e("AppViewModel ensureUserId - failed to fetch userId: ${result.exception.message}")
+                ""
+            }
+
             else -> {
                 Logger.w("AppViewModel ensureUserId - failed to fetch userId")
                 ""
             }
         }
+    }
+
+    private suspend fun ensureProfile(userId: String) {
+        profileRepository.loadCurrentUserProfile(userId)
     }
 
     fun onScreenChanged(title: String) {

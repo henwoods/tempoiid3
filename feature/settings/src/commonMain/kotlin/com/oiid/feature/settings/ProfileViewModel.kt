@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.oiid.core.data.auth.AuthRepository
+import com.oiid.core.data.profile.ProfileRepository
 import com.oiid.core.data.profile.ProfileService
 import com.oiid.core.data.user.UserRepository
 import com.oiid.core.datastore.UserPreferencesRepository
@@ -206,8 +207,8 @@ class ProfileViewModel(
             authRepository.signOut()
 
             userRepository.clearUserInfo()
-            // Clear userId from preferences as well
-            settingsRepository.setUserId("")
+            settingsRepository.clearUserData()
+            profileService.clearProfile()
 
             onLogoutComplete()
             _loggingOut.value = false

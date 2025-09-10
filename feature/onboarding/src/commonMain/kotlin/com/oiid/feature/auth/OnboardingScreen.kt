@@ -20,8 +20,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.launch
 import oiid.core.base.designsystem.theme.OiidTheme
+import oiid.core.base.designsystem.theme.OiidTheme.spacing
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -84,10 +86,10 @@ internal fun OnboardingScreenContent(
 @Composable
 fun BoxScope.DismissIcon(onDismiss: () -> Unit) {
     IconButton(
-        modifier = Modifier.align(Alignment.TopStart).padding(OiidTheme.spacing.md),
+        modifier = Modifier.align(Alignment.TopStart).padding(spacing.md),
         onClick = onDismiss,
         content = {
-            Icon(imageVector = Icons.Filled.Close, contentDescription = "Dismiss onboarding")
+            Icon(tint = Color.White, imageVector = Icons.Filled.Close, contentDescription = "Dismiss onboarding")
         },
     )
 }

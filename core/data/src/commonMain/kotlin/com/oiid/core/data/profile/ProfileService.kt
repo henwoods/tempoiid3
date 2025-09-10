@@ -31,4 +31,6 @@ interface ProfileService {
      * @return A [SignedURLResponse] containing the signed URL and public URL.
      */
     suspend fun getHeaderImageUploadUrl(): SignedURLResponse
+
+    fun clearProfile()
 }

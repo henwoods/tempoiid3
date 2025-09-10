@@ -55,4 +55,8 @@ class ProfileRepositoryImpl(
     override suspend fun getHeaderImageUploadUrl(): SignedURLResponse {
         return profileService.getHeaderImageUploadUrl()
     }
+
+    override fun clearProfile() {
+        profileService.clearProfile()
+    }
 }

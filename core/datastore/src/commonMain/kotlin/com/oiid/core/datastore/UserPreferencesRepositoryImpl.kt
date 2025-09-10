@@ -124,6 +124,10 @@ class UserPreferencesRepositoryImpl(
         return preferencesStore.observePreference(USER_ID_KEY, DEFAULT_USER_ID)
     }
 
+    override suspend fun clearUserData() {
+        setUserId("")
+    }
+
     // Batch Operations
     override suspend fun resetToDefaults(): Result<Unit> {
         return runCatching {

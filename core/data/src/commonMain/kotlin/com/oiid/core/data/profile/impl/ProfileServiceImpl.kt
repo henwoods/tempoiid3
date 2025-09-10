@@ -40,6 +40,8 @@ class ProfileServiceImpl(
         try {
             val profile = profileApiService.getProfile(userId).toProfile(isCurrentUser = true)
             updateCache("${CURRENT_USER_PROFILE_CACHE_KEY}_$userId", profile)
+
+            Logger.d("$TAG cached profile ${profile.name}")
             currentUserProfileFlow.value = Resource.Success(profile)
         } catch (e: Exception) {
             Logger.e("$TAG Error loading current user profile: ${e.message}")
@@ -126,6 +128,10 @@ class ProfileServiceImpl(
             Logger.e("$TAG Error getting header image upload URL: ${e.message}")
             throw e
         }
+    }
+
+    override fun clearProfile() {
+        profileCache.clear()
     }
 
     private fun updateCache(key: String, profile: Profile) {

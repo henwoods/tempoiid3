@@ -31,6 +31,8 @@ interface UserPreferencesRepository {
     suspend fun getUserId(): Result<String>
     fun observeUserId(): Flow<String>
 
+    suspend fun clearUserData()
+
     // Liked Posts Operations
     suspend fun addLikedPost(postId: String): Result<Unit>
     suspend fun removeLikedPost(postId: String): Result<Unit>

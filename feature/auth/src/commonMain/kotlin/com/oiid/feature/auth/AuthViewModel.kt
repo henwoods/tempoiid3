@@ -5,9 +5,12 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.oiid.core.data.auth.AuthOperationResult
 import com.oiid.core.data.auth.AuthRepository
+import com.oiid.core.data.profile.ProfileRepository
+import com.oiid.core.data.user.UserRepository
 import com.oiid.core.datastore.TokenStorage
 import com.oiid.core.model.AuthState
 import com.oiid.core.model.UserCredentials
+import com.oiid.core.model.api.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +19,8 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel(
     val authRepository: AuthRepository,
+    val userRepository: UserRepository,
+    val profileRepository: ProfileRepository,
     tokenStorage: TokenStorage,
 ) : ViewModel() {
     private val _authUiState = MutableStateFlow<AuthUiState>(AuthUiState.Success(state = AuthState.Unauthenticated))
@@ -147,6 +152,11 @@ class AuthViewModel(
 
                 _authUiState.value = AuthUiState.Error(message)
             } else {
+                val userInfo = userRepository.fetchAndStoreUserInfo()
+                if (userInfo is Resource.Success) {
+                    profileRepository.loadCurrentUserProfile(userInfo.data.userId)
+                }
+
                 _authUiState.value = AuthUiState.Success(state = AuthState.Authenticated)
             }
         }
@@ -265,20 +275,6 @@ class AuthViewModel(
             } else {
                 onRegistrationConfirmed()
             }
-        }
-    }
-
-    fun logout() {
-        viewModelScope.launch {
-            _authUiState.value = AuthUiState.Loading(
-                state = AuthLoadingState.LoggingOut,
-            )
-
-            authRepository.signOut()
-
-            _authUiState.value = AuthUiState.Success(
-                state = AuthState.Unauthenticated,
-            )
         }
     }
 
